@@ -152,13 +152,26 @@
     </div>
   </div>
 
-  <div id="output-section" class="hidden" style="margin-top: 25px; border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: #f9f9f9;">
+/*  <div id="output-section" class="hidden" style="margin-top: 25px; border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: #f9f9f9;">
     <h2>Order Summary</h2>
     <p>Copy the text below and paste it into an email to complete your order:</p>
     <textarea id="order-text" readonly></textarea>
     <button onclick="copyText()" style="margin-top: 10px; background: #0366d6;">Copy to Clipboard</button>
   </div>
+*/
+  
+  <!-- Generated Text Output -->
+  <div id="output-section" class="hidden" style="margin-top: 25px; border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: #f9f9f9;">
+    <h2>Order Summary</h2>
+    <p>Click below to open your email app with this order filled out, or copy and paste it manually:</p>
+    <textarea id="order-text" readonly></textarea>
+    <div style="display: flex; gap: 10px; margin-top: 10px;">
+      <button onclick="sendEmail()">Send via Email</button>
+      <button onclick="copyText()">Copy to Clipboard</button>
+    </div>
+  </div>
 
+  
   <script>
     const products = [
       { id: 1, image: "BasicsIconThumbnail.png", name: "Testosterone E", price: 30.00, desc: "250mg/ml" },
