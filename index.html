@@ -9,8 +9,6 @@
     .container { display: flex; flex-wrap: wrap; gap: 20px; }
     .products, .cart { flex: 1; min-width: 320px; border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: #fff; }
     .product-item, .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; }
-    
-    /* Buttons & Controls */
     button { background: #2ea44f; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 14px; }
     button:hover { background: #2c974b; }
     .qty-controls { display: flex; align-items: center; gap: 6px; }
@@ -18,20 +16,14 @@
     .qty-btn:hover { background: #57606a; }
     .remove-btn { background: #d73a49; padding: 4px 8px; font-size: 12px; margin-left: 5px; }
     .remove-btn:hover { background: #cb2431; }
-
-    /* Totals */
     .summary-row { display: flex; justify-content: space-between; margin-top: 8px; font-size: 15px; }
     .total-row { display: flex; justify-content: space-between; font-size: 1.2em; font-weight: bold; margin: 12px 0 20px; padding-top: 10px; border-top: 2px solid #eee; }
-
-    /* Customer Form */
     .form-section { border-top: 1px solid #ddd; padding-top: 15px; margin-top: 15px; }
     .form-group { margin-bottom: 12px; }
     .form-row { display: flex; gap: 10px; }
     .form-row .form-group { flex: 1; }
     label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 4px; }
     input, select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; }
-
-    /* Output Area */
     textarea { width: 100%; height: 260px; margin-top: 10px; padding: 12px; box-sizing: border-box; font-family: monospace; font-size: 13px; border: 1px solid #ccc; border-radius: 5px; }
     .hidden { display: none; }
   </style>
@@ -41,13 +33,11 @@
   <h1>Product Catalog</h1>
 
   <div class="container">
-    <!-- Product List -->
     <div class="products">
       <h2>Available Items</h2>
       <div id="product-list"></div>
     </div>
 
-    <!-- Shopping Cart & Customer Details -->
     <div class="cart">
       <h2>Your Cart</h2>
       <div id="cart-items"><p>Your cart is empty.</p></div>
@@ -65,7 +55,6 @@
         <span>$<span id="cart-total">0.00</span></span>
       </div>
 
-      <!-- Customer Input Fields -->
       <div class="form-section">
         <h3>Customer & Payment Details</h3>
         <div class="form-group">
@@ -108,7 +97,6 @@
     </div>
   </div>
 
-  <!-- Generated Text Output -->
   <div id="output-section" class="hidden" style="margin-top: 25px; border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: #f9f9f9;">
     <h2>Order Summary</h2>
     <p>Copy the text below and paste it into an email to complete your order:</p>
@@ -117,7 +105,6 @@
   </div>
 
   <script>
-    // 1. Edit your products here
     const products = [
       { id: 1, name: "Standard T-Shirt", price: 20.00 },
       { id: 2, name: "Canvas Tote Bag", price: 15.50 },
@@ -128,19 +115,19 @@
     const FLAT_SHIPPING = 20.00;
     let cart = [];
 
-    // Render products on load
-    const productListEl = document.getElementById("product-list");
-    products.forEach(product => {
-      const div = document.createElement("div");
-      div.className = "product-item";
-      div.innerHTML = `
-        <span><strong>${product.name}</strong> - $${product.price.toFixed(2)}</span>
-        <button onclick="addToCart(${product.id})">Add to Cart</button>
-      `;
-      productListEl.appendChild(div);
+    document.addEventListener("DOMContentLoaded", () => {
+      const productListEl = document.getElementById("product-list");
+      products.forEach(product => {
+        const div = document.createElement("div");
+        div.className = "product-item";
+        div.innerHTML = `
+          <span><strong>${product.name}</strong> - $${product.price.toFixed(2)}</span>
+          <button onclick="addToCart(${product.id})">Add to Cart</button>
+        `;
+        productListEl.appendChild(div);
+      });
     });
 
-    // Add item to cart
     function addToCart(productId) {
       const product = products.find(p => p.id === productId);
       const existing = cart.find(item => item.id === productId);
@@ -152,7 +139,6 @@
       updateCartUI();
     }
 
-    // Increase or decrease quantity
     function changeQty(productId, delta) {
       const item = cart.find(i => i.id === productId);
       if (!item) return;
@@ -164,13 +150,11 @@
       }
     }
 
-    // Remove item completely from cart
     function removeFromCart(productId) {
       cart = cart.filter(item => item.id !== productId);
       updateCartUI();
     }
 
-    // Update cart display, shipping, and total
     function updateCartUI() {
       const cartItemsEl = document.getElementById("cart-items");
       const subtotalEl = document.getElementById("cart-subtotal");
@@ -214,7 +198,6 @@
       totalEl.textContent = grandTotal.toFixed(2);
     }
 
-    // Validate inputs and generate copy-paste text summary
     function generateOrder() {
       if (cart.length === 0) {
         alert("Please add at least one item to your cart first.");
@@ -250,25 +233,24 @@
       summary += "------------------------------------\n";
       summary += `Subtotal: $${subtotal.toFixed(2)}\n`;
       summary += `Flat Rate Shipping: $${FLAT_SHIPPING.toFixed(2)}\n`;
-      summary += TOTAL DUE: $${grandTotal.toFixed(2)}\n;
-      summary += Payment Method: ${payment}\n;
+      summary += `TOTAL DUE: $${grandTotal.toFixed(2)}\n`;
+      summary += `Payment Method: ${payment}\n`;
       summary += "====================================\n";
       summary += "CUSTOMER DETAILS:\n";
-      summary += Name: ${name}\n;
-      summary += Email: ${email}\n;
-      summary += Address: ${address}\n;
-      summary += City/State/Zip: ${city}, ${state} ${zip}\n;
-      document.getElementById("order-text").value = summary;
-      document.getElementById("output-section").classList.remove("hidden");
-      }
-      // Copy text to clipboard
-      function copyText() {
-      const textArea = document.getElementById("order-text");
-      textArea.select();
-      navigator.clipboard.writeText(textArea.value);
-      alert("Order copied to clipboard!");
-      }
-      
+      summary += `Name: ${name}\n`;
+      summary += `Email: ${email}\n`;
+      summary += `Address: ${address}\n`;
+      summary += `City/State/Zip: ${city}, ${state} ${zip}\n`;
+document.getElementById("order-text").value = summary;
+document.getElementById("output-section").classList.remove("hidden");
+}
+function copyText() {
+const textArea = document.getElementById("order-text");
+textArea.select();
+navigator.clipboard.writeText(textArea.value);
+alert("Order copied to clipboard!");
+}
+
 renderProducts();
   </script>
 </body>
