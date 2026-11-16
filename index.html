@@ -151,14 +151,6 @@
       <button onclick="generateOrder()" style="width: 100%; font-size: 16px; margin-top: 10px;">Submit Order</button>
     </div>
   </div>
-
-/*  <div id="output-section" class="hidden" style="margin-top: 25px; border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: #f9f9f9;">
-    <h2>Order Summary</h2>
-    <p>Copy the text below and paste it into an email to complete your order:</p>
-    <textarea id="order-text" readonly></textarea>
-    <button onclick="copyText()" style="margin-top: 10px; background: #0366d6;">Copy to Clipboard</button>
-  </div>
-*/
   
   <!-- Generated Text Output -->
   <div id="output-section" class="hidden" style="margin-top: 25px; border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: #f9f9f9;">
@@ -333,16 +325,13 @@ navigator.clipboard.writeText(textArea.value);
 alert("Order copied to clipboard!");
 }
 
-    // Launch default mail client with pre-filled order
-  function sendEmail() {
-  const storeEmail = "youremail@example.com"; // Replace with your store email
-  const customerName = document.getElementById("cust-name").value.trim();
-  const orderBody = document.getElementById("order-text").value;
-
-  const subject = encodeURIComponent(`New Order Request - ${customerName}`);
-  const body = encodeURIComponent(orderBody);
-
-  window.location.href = `mailto:${storeEmail}?subject=${subject}&body=${body}`;
+function sendEmail() {
+const storeEmail = "youremail@example.com"; // <-- REPLACE WITH YOUR EMAIL
+const customerName = document.getElementById("cust-name").value.trim();
+const orderBody = document.getElementById("order-text").value;
+const subject = encodeURIComponent(New Order Request - ${customerName});
+const body = encodeURIComponent(orderBody);
+window.location.href = mailto:${storeEmail}?subject=${subject}&body=${body};
 }
 renderProducts();
   </script>
