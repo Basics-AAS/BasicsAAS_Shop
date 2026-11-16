@@ -182,7 +182,8 @@
 
     const FLAT_SHIPPING = 20.00;
     let cart = [];
-
+    let currentOrderId = "";
+    
     document.addEventListener("DOMContentLoaded", () => {
       const productListEl = document.getElementById("product-list");
       products.forEach(product => {
@@ -272,7 +273,7 @@
       totalEl.textContent = grandTotal.toFixed(2);
     }
 
-    function generateOrder() {
+ function generateOrder() {
       if (cart.length === 0) {
         alert("Please add at least one item to your cart first.");
         return;
@@ -291,7 +292,16 @@
         return;
       }
 
+      // Generate Unique Order ID (e.g., ORD-20261116-4829)
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const day = String(now.getDate()).padStart(2, "0");
+      const randomDigits = Math.floor(1000 + Math.random() * 9000);
+      currentOrderId = "ORD-" + year + month + day + "-" + randomDigits;
+
       let summary = "NEW ORDER REQUEST\n";
+      summary += "Order ID: " + currentOrderId + "\n";
       summary += "====================================\n";
       summary += "ITEMS ORDERED:\n";
       
@@ -299,25 +309,26 @@
       cart.forEach(item => {
         const itemTotal = item.price * item.qty;
         subtotal += itemTotal;
-        summary += `- ${item.qty}x ${item.name} @ $${item.price.toFixed(2)} = $${itemTotal.toFixed(2)}\n`;
+        summary += "- " + item.qty + "x " + item.name + " @ $" + Number(item.price).toFixed(2) + " = $" + itemTotal.toFixed(2) + "\n";
       });
 
       const grandTotal = subtotal + FLAT_SHIPPING;
 
       summary += "------------------------------------\n";
-      summary += `Subtotal: $${subtotal.toFixed(2)}\n`;
-      summary += `Flat Rate Shipping: $${FLAT_SHIPPING.toFixed(2)}\n`;
-      summary += `TOTAL DUE: $${grandTotal.toFixed(2)}\n`;
-      summary += `Payment Method: ${payment}\n`;
+      summary += "Subtotal: $" + subtotal.toFixed(2) + "\n";
+      summary += "Flat Rate Shipping: $" + FLAT_SHIPPING.toFixed(2) + "\n";
+      summary += "TOTAL DUE: $" + grandTotal.toFixed(2) + "\n";
+      summary += "Payment Method: " + payment + "\n";
       summary += "====================================\n";
       summary += "CUSTOMER DETAILS:\n";
-      summary += `Name: ${name}\n`;
-      summary += `Email: ${email}\n`;
-      summary += `Address: ${address}\n`;
-      summary += `City/State/Zip: ${city}, ${state} ${zip}\n`;
-document.getElementById("order-text").value = summary;
-document.getElementById("output-section").classList.remove("hidden");
-}
+      summary += "Name: " + name + "\n";
+      summary += "Email: " + email + "\n";
+      summary += "Address: " + address + "\n";
+      summary += "City/State/Zip: " + city + ", " + state + " " + zip + "\n";
+
+      document.getElementById("order-text").value = summary;
+      document.getElementById("output-section").classList.remove("hidden");
+    }
 function copyText() {
 const textArea = document.getElementById("order-text");
 textArea.select();
