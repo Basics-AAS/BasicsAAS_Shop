@@ -326,13 +326,15 @@ alert("Order copied to clipboard!");
 }
 
 function sendEmail() {
-const storeEmail = "BasicsAAS@protonmail.com"; // <-- REPLACE WITH YOUR EMAIL
-const customerName = document.getElementById("cust-name").value.trim();
-const orderBody = document.getElementById("order-text").value;
-const subject = encodeURIComponent("New Order Request - " + customerName);
-const body = encodeURIComponent(orderBody);
-window.location.href = mailto:${storeEmail}?subject=${subject}&body=${body};
-}
+      const storeEmail = "SasquatchMuscleUSA@proton.me";
+      const customerName = document.getElementById("cust-name").value.trim();
+      const orderBody = document.getElementById("order-text").value;
+
+      const subject = encodeURIComponent("New Order Request - " + customerName);
+      const body = encodeURIComponent(orderBody);
+
+      window.location.href = "mailto:" + storeEmail + "?subject=" + subject + "&body=" + body;
+    }
 renderProducts();
   </script>
 </body>
