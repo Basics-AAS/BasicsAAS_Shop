@@ -333,6 +333,17 @@ navigator.clipboard.writeText(textArea.value);
 alert("Order copied to clipboard!");
 }
 
+    // Launch default mail client with pre-filled order
+  function sendEmail() {
+  const storeEmail = "youremail@example.com"; // Replace with your store email
+  const customerName = document.getElementById("cust-name").value.trim();
+  const orderBody = document.getElementById("order-text").value;
+
+  const subject = encodeURIComponent(`New Order Request - ${customerName}`);
+  const body = encodeURIComponent(orderBody);
+
+  window.location.href = `mailto:${storeEmail}?subject=${subject}&body=${body}`;
+}
 renderProducts();
   </script>
 </body>
