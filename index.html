@@ -375,8 +375,12 @@ Ethereum: "0xafcfbd8a25111fa287295d76cf7200dc8b0bbcc0"
       }
 
       const textDiv = document.createElement("div");
-      const descText = p.desc ? " <small>(" + p.desc + ")</small>" : "";
-      textDiv.innerHTML = "<strong>" + p.name + "</strong>" + descText + "<br /><span>$" + p.price.toFixed(2) + "</span>";
+const descText = p.desc ? " <small>(" + p.desc + ")</small>" : "";
+
+textDiv.innerHTML =
+    "<strong>" + p.name + "</strong>" +
+    descText +
+    "<br /><span>$" + p.price.toFixed(2) + "</span>";
       infoDiv.appendChild(textDiv);
 
       const btn = document.createElement("button");
