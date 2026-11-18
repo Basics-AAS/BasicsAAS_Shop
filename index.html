@@ -401,38 +401,7 @@ let cart = [];
 let currentOrderData = null;
 let confirmedTxid = "";
 // <--- THIS IS WHERE renderProducts() GOES --->
-function renderProducts() {
-const list = document.getElementById("product-list");
-list.innerHTML = "";
-products.forEach(function(p) {
-const itemDiv = document.createElement("div");
-itemDiv.className = "product-item";
-const infoDiv = document.createElement("div");
-infoDiv.className = "product-info";
-if (p.icon) {
-const img = document.createElement("img");
-img.src = p.icon;
-img.alt = p.name;
-img.className = "product-icon";
-img.onerror = function() { this.style.display = "none"; };
-infoDiv.appendChild(img);
-}
-const textDiv = document.createElement("div");
-//textDiv.innerHTML = "" + p.name + "
-//$" + p.price.toFixed(2) + "";
-textDiv.innerHTML = "<strong>" + p.name +
-    "</strong><br>$" + p.price.toFixed(2);
-  
-infoDiv.appendChild(textDiv);
-const btn = document.createElement("button");
-btn.type = "button";
-btn.textContent = "Add to Cart";
-btn.onclick = function() { addToCart(p.id); };
-itemDiv.appendChild(infoDiv);
-itemDiv.appendChild(btn);
-list.appendChild(itemDiv);
-});
-}
+
 function addToCart(productId) {
 const product = products.find(function(p) { return p.id === productId; });
 const existing = cart.find(function(item) { return item.id === productId; });
