@@ -339,21 +339,57 @@ const WALLETS = {
 Bitcoin: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
 Ethereum: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
 };
-// Update your product names, prices, and image filenames here (leave icon: "" if no image)
-const products = [
-      { id: 1, image: "BasicsIconThumbnail.png", name: "Testosterone E", price: 30.00, desc: "250mg/ml" },
-      { id: 2, image: "BasicsIconThumbnail.png", name: "Testosterone E", price: 35.00, desc: "300mg/ml" },
-      { id: 3, image: "BasicsIconThumbnail.png", name: "Testosterone C", price: 30.00, desc: "200mg/ml" },
-      { id: 4, image: "BasicsIconThumbnail.png", name: "Testosterone C", price: 35.00, desc: "250mg/ml" },
-      { id: 5, image: "BasicsIconThumbnail.png", name: "Testosterone P", price: 30.00, desc: "100mg/ml" },
-      { id: 6, image: "BasicsIconThumbnail.png", name: "Sustanon 250", price: 40.00, desc: "250mg/ml" },
-      { id: 7, image: "BasicsIconThumbnail.png", name: "Sustanon 250", price: 45.00, desc: "300mg/ml" },
-      { id: 8, image: "BasicsIconThumbnail.png", name: "Nandrolone Decanoate (DECA)", price: 30.00, desc: "200mg/ml" },
-      { id: 9, image: "BasicsIconThumbnail.png", name: "Nandrolone Phenylpropionate (NPP)", price: 40.00, desc: "100mg/ml" },
-      { id: 10, image: "BasicsIconThumbnail.png", name: "Trenbolone E", price: 55.00, desc: "200mg/ml" },
-      { id: 11, image: "BasicsIconThumbnail.png", name: "Trenbolone A", price: 45.00, desc: "100mg/ml" }
+  // Your exact product list using image and desc
+  const products = [
+    { id: 1, image: "BasicsIconThumbnail.png", name: "Testosterone E", price: 30.00, desc: "250mg/ml" },
+    { id: 2, image: "BasicsIconThumbnail.png", name: "Testosterone E", price: 35.00, desc: "300mg/ml" },
+    { id: 3, image: "BasicsIconThumbnail.png", name: "Testosterone C", price: 30.00, desc: "200mg/ml" },
+    { id: 4, image: "BasicsIconThumbnail.png", name: "Testosterone C", price: 35.00, desc: "250mg/ml" },
+    { id: 5, image: "BasicsIconThumbnail.png", name: "Testosterone P", price: 30.00, desc: "100mg/ml" },
+    { id: 6, image: "BasicsIconThumbnail.png", name: "Sustanon 250", price: 40.00, desc: "250mg/ml" },
+    { id: 7, image: "BasicsIconThumbnail.png", name: "Sustanon 250", price: 45.00, desc: "300mg/ml" },
+    { id: 8, image: "BasicsIconThumbnail.png", name: "Nandrolone Decanoate (DECA)", price: 30.00, desc: "200mg/ml" },
+    { id: 9, image: "BasicsIconThumbnail.png", name: "Nandrolone Phenylpropionate (NPP)", price: 40.00, desc: "100mg/ml" },
+    { id: 10, image: "BasicsIconThumbnail.png", name: "Trenbolone E", price: 55.00, desc: "200mg/ml" },
+    { id: 11, image: "BasicsIconThumbnail.png", name: "Trenbolone A", price: 45.00, desc: "100mg/ml" }
+  ];
 
-];
+  function renderProducts() {
+    const list = document.getElementById("product-list");
+    list.innerHTML = "";
+
+    products.forEach(function(p) {
+      const itemDiv = document.createElement("div");
+      itemDiv.className = "product-item";
+
+      const infoDiv = document.createElement("div");
+      infoDiv.className = "product-info";
+
+      if (p.image) {
+        const img = document.createElement("img");
+        img.src = p.image;
+        img.alt = p.name;
+        img.className = "product-icon";
+        img.onerror = function() { this.style.display = "none"; };
+        infoDiv.appendChild(img);
+      }
+
+      const textDiv = document.createElement("div");
+      const descText = p.desc ? " <small>(" + p.desc + ")</small>" : "";
+      textDiv.innerHTML = "<strong>" + p.name + "</strong>" + descText + "<br /><span>$" + p.price.toFixed(2) + "</span>";
+      infoDiv.appendChild(textDiv);
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = "Add to Cart";
+      btn.onclick = function() { addToCart(p.id); };
+
+      itemDiv.appendChild(infoDiv);
+      itemDiv.appendChild(btn);
+      list.appendChild(itemDiv);
+    });
+  }
+
 // ==========================================
 // 2. STORE & CART LOGIC (DOM-SAFE)
 // ==========================================
