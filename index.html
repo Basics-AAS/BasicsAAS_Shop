@@ -414,8 +414,11 @@ img.onerror = function() { this.style.display = "none"; };
 infoDiv.appendChild(img);
 }
 const textDiv = document.createElement("div");
-textDiv.innerHTML = "" + p.name + "
-$" + p.price.toFixed(2) + "";
+//textDiv.innerHTML = "" + p.name + "
+//$" + p.price.toFixed(2) + "";
+textDiv.innerHTML = "<strong>" + p.name +
+    "</strong><br>$" + p.price.toFixed(2);
+  
 infoDiv.appendChild(textDiv);
 const btn = document.createElement("button");
 btn.type = "button";
@@ -466,8 +469,12 @@ subtotal += lineTotal;
 const row = document.createElement("div");
 row.className = "product-item";
 const left = document.createElement("div");
-left.innerHTML = "" + item.name + " ($" + item.price.toFixed(2) + " ea)
-Line Total: $" + lineTotal.toFixed(2) + "";
+//left.innerHTML = "" + item.name + " ($" + item.price.toFixed(2) + " ea)
+//Line Total: $" + lineTotal.toFixed(2) + "";
+left.innerHTML =
+    item.name + " ($" + item.price.toFixed(2) + " ea)<br>" +
+    "Line Total: $" + lineTotal.toFixed(2);
+  
 const right = document.createElement("div");
 const minusBtn = document.createElement("button");
 minusBtn.type = "button";
