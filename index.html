@@ -541,9 +541,14 @@ payLink.href = uriScheme;
 payLink.textContent = "Pay with " + paymentMethod + " Wallet App";
 const qrUrl = "qrserver.com" + encodeURIComponent(uriScheme);
 document.getElementById("crypto-qr-code").src = qrUrl;
+//const itemLines = cart.map(function(i) {
+//return i.name + " (x" + i.qty + ") - $" + (i.price * i.qty).toFixed(2);
+//}).join("\n");
 const itemLines = cart.map(function(i) {
-return i.name + " (x" + i.qty + ") - $" + (i.price * i.qty).toFixed(2);
+  return i.name + " (x" + i.qty + ") - $" + (i.price * i.qty).toFixed(2);
 }).join("\n");
+
+  
 currentOrderData = {
 orderId: orderId,
 items: itemLines,
