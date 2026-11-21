@@ -1,398 +1,393 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BasicsAAS Storefront</title>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #0D123D;
-      color: #1b2e1e;
-      margin: 0;
-      padding: 20px;
-      line-height: 1.5;
-    }
-    .container {
-      max-width: 850px;
-      margin: 0 auto;
-      background: #BDBDBD;
-      padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    }
-    .banner {
-      width: 100%;
-      max-height: auto;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 20px;
-    }
-    h1, h2, h3 {
-      color: #0D123D;
-      margin-top: 0;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-    @media (max-width: 700px) {
-      .grid { grid-template-columns: 1fr; }
-    }
-    .card {
-      border: 1px solid #0D123D;
-      border-radius: 8px;
-      padding: 16px;
-      background: #E8E8E8;
-    }
-    .product-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid #e0e0e0;
-    }
-    .product-item:last-child { border-bottom: none; }
-    .product-info {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .product-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 6px;
-      object-fit: cover;
-      background: #e0e0e0;
-    }
-    button {
-      background-color: #45BBF6;
-      color: white;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 600;
-    }
-    button:hover:not(:disabled) {
-      background-color: #00129A;
-    }
-    button:disabled {
-      background-color: #a5d6a7;
-      cursor: not-allowed;
-      opacity: 0.7;
-    }
-    .btn-secondary {
-      background-color: #455a64;
-    }
-    .btn-secondary:hover:not(:disabled) {
-      background-color: #263238;
-    }
-    .qty-btn {
-      padding: 4px 9px;
-      font-size: 13px;
-      margin: 0 3px;
-    }
-    .remove-btn {
-      background-color: #c62828;
-      padding: 4px 8px;
-      font-size: 12px;
-      margin-left: 6px;
-    }
-    .remove-btn:hover { background-color: #8e0000; }
-    .form-group {
-      margin-bottom: 12px;
-    }
-    label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 4px;
-      font-size: 14px;
-    }
-    input, select, textarea {
-      width: 100%;
-      padding: 9px;
-      border: 1px solid #bdbdbd;
-      border-radius: 6px;
-      box-sizing: border-box;
-      font-size: 14px;
-    }
-    .totals {
-      margin-top: 14px;
-      padding-top: 10px;
-      border-top: 2px solid #00047D;
-      font-size: 15px;
-    }
-    .totals p {
-      margin: 5px 0;
-      display: flex;
-      justify-content: space-between;
-    }
-    .total-final {
-      font-size: 18px;
-      font-weight: bold;
-      color: #00047D;
-    }
-    #order-summary-section {
-      display: none;
-      margin-top: 25px;
-      border: 2px solid #2e7d32;
-      background: #ffffff;
-      border-radius: 8px;
-      padding: 20px;
-    }
-    .crypto-box {
-      background: #f1f8e9;
-      border: 1px solid #aed581;
-      border-radius: 8px;
-      padding: 16px;
-      margin-bottom: 18px;
-      text-align: center;
-    }
-    .wallet-address-box {
-      background: #ffffff;
-      border: 1px dashed #2e7d32;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-family: monospace;
-      font-size: 13px;
-      word-break: break-all;
-      margin: 10px 0;
-    }
-    .crypto-link {
-      display: inline-block;
-      margin: 8px 0;
-      padding: 10px 16px;
-      background-color: #f57c00;
-      color: #ffffff;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: bold;
-    }
-    .crypto-link:hover {
-      background-color: #e65100;
-    }
-    .qr-img {
-      display: block;
-      margin: 12px auto;
-      border: 4px solid #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-    }
-    .txid-step {
-      background: #fffde7;
-      border: 1px solid #fbc02d;
-      border-radius: 8px;
-      padding: 15px;
-      margin-bottom: 18px;
-    }
-    .status-badge {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-    .status-pending {
-      background: #ffe082;
-      color: #6d4c41;
-    }
-    .status-confirmed {
-      background: #c8e6c9;
-      color: #1b5e20;
-    }
-    .action-buttons {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 12px;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BasicsAAS Storefront</title>
+<style>
+body {
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+background-color: #0D123D;
+color: #1b2e1e;
+margin: 0;
+padding: 20px;
+line-height: 1.5;
+}
+.container {
+max-width: 850px;
+margin: 0 auto;
+background: #BDBDBD;
+padding: 25px;
+border-radius: 10px;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+.banner {
+width: 100%;
+max-height: auto;
+object-fit: cover;
+border-radius: 8px;
+margin-bottom: 20px;
+}
+h1, h2, h3 {
+color: #0D123D;
+margin-top: 0;
+}
+.grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 24px;
+}
+@media (max-width: 700px) {
+.grid { grid-template-columns: 1fr; }
+}
+.card {
+border: 1px solid #0D123D;
+border-radius: 8px;
+padding: 16px;
+background: #E8E8E8;
+}
+.product-item {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 10px 0;
+border-bottom: 1px solid #e0e0e0;
+}
+.product-item:last-child { border-bottom: none; }
+.product-info {
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.product-icon {
+width: 40px;
+height: 40px;
+border-radius: 6px;
+object-fit: cover;
+background: #e0e0e0;
+}
+button {
+background-color: #45BBF6;
+color: white;
+border: none;
+padding: 8px 14px;
+border-radius: 6px;
+cursor: pointer;
+font-size: 14px;
+font-weight: 600;
+}
+button:hover:not(:disabled) {
+background-color: #00129A;
+}
+button:disabled {
+background-color: #a5d6a7;
+cursor: not-allowed;
+opacity: 0.7;
+}
+.btn-secondary {
+background-color: #455a64;
+}
+.btn-secondary:hover:not(:disabled) {
+background-color: #263238;
+}
+.qty-btn {
+padding: 4px 9px;
+font-size: 13px;
+margin: 0 3px;
+}
+.remove-btn {
+background-color: #c62828;
+padding: 4px 8px;
+font-size: 12px;
+margin-left: 6px;
+}
+.remove-btn:hover { background-color: #8e0000; }
+.form-group {
+margin-bottom: 12px;
+}
+label {
+display: block;
+font-weight: 600;
+margin-bottom: 4px;
+font-size: 14px;
+}
+input, select, textarea {
+width: 100%;
+padding: 9px;
+border: 1px solid #bdbdbd;
+border-radius: 6px;
+box-sizing: border-box;
+font-size: 14px;
+}
+.totals {
+margin-top: 14px;
+padding-top: 10px;
+border-top: 2px solid #00047D;
+font-size: 15px;
+}
+.totals p {
+margin: 5px 0;
+display: flex;
+justify-content: space-between;
+}
+.total-final {
+font-size: 18px;
+font-weight: bold;
+color: #00047D;
+}
+#order-summary-section {
+display: none;
+margin-top: 25px;
+border: 2px solid #2e7d32;
+background: #ffffff;
+border-radius: 8px;
+padding: 20px;
+}
+.crypto-box {
+background: #f1f8e9;
+border: 1px solid #aed581;
+border-radius: 8px;
+padding: 16px;
+margin-bottom: 18px;
+text-align: center;
+}
+.wallet-address-box {
+background: #ffffff;
+border: 1px dashed #2e7d32;
+padding: 8px 12px;
+border-radius: 6px;
+font-family: monospace;
+font-size: 13px;
+word-break: break-all;
+margin: 10px 0;
+}
+.crypto-link {
+display: inline-block;
+margin: 8px 0;
+padding: 10px 16px;
+background-color: #f57c00;
+color: #ffffff;
+text-decoration: none;
+border-radius: 6px;
+font-weight: bold;
+}
+.crypto-link:hover {
+background-color: #e65100;
+}
+.qr-img {
+display: block;
+margin: 12px auto;
+border: 4px solid #ffffff;
+border-radius: 8px;
+box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+.txid-step {
+background: #fffde7;
+border: 1px solid #fbc02d;
+border-radius: 8px;
+padding: 15px;
+margin-bottom: 18px;
+}
+.status-badge {
+display: inline-block;
+padding: 4px 10px;
+border-radius: 12px;
+font-size: 12px;
+font-weight: bold;
+margin-bottom: 8px;
+}
+.status-pending {
+background: #ffe082;
+color: #6d4c41;
+}
+.status-confirmed {
+background: #c8e6c9;
+color: #1b5e20;
+}
+.action-buttons {
+display: flex;
+gap: 10px;
+flex-wrap: wrap;
+margin-top: 12px;
+}
+</style>
 </head>
 <body>
 
 <div class="container">
-  <!-- If you have a banner image in your GitHub repo, set src="your-banner-filename.jpg" -->
+<!-- If you have a banner image in your GitHub repo, set src="your-banner-filename.jpg" -->
 <img src="banner.png" alt="Store Banner" class="banner">
-  
-  <h1>BasicsAAS Storefront</h1>
+<h1>BasicsAAS Storefront</h1>
 
-  <div class="grid">
-    <!-- Left Column: Product Catalog -->
-    <div class="card">
-      <h2>Product Catalog</h2>
-      <h3>Available Items</h3>
-      <div id="product-list"></div>
-    </div>
+<div class="grid">
+<!-- Left Column: Product Catalog -->
+<div class="card">
+<h2>Product Catalog</h2>
+<h3>Available Items</h3>
+<div id="product-list"></div>
+</div>
 
-    <!-- Right Column: Cart & Checkout Form -->
-    <div class="card">
-      <h2>Your Cart</h2>
-      <div id="cart-items"><p>Your cart is empty.</p></div>
+<!-- Right Column: Cart & Checkout Form -->
+<div class="card">
+<h2>Your Cart</h2>
+<div id="cart-items"><p>Your cart is empty.</p></div>
 
-      <div class="totals">
-        <p><span>Subtotal:</span> <span>$ <span id="subtotal">0.00</span></span></p>
-        <p><span>Flat Rate Shipping:</span> <span>$ <span id="shipping">0.00</span></span></p>
-        <p class="total-final"><span>Total:</span> <span>$ <span id="total">0.00</span></span></p>
-      </div>
+<div class="totals">
+<p><span>Subtotal:</span> <span>$ <span id="subtotal">0.00</span></span></p>
+<p><span>Flat Rate Shipping:</span> <span>$ <span id="shipping">0.00</span></span></p>
+<p class="total-final"><span>Total:</span> <span>$ <span id="total">0.00</span></span></p>
+</div>
 
-      <hr style="margin: 18px 0; border: 0; border-top: 1px solid #c8e6c9;" />
+<hr style="margin: 18px 0; border: 0; border-top: 1px solid #c8e6c9;" />
 
-      <h3>Customer & Payment Details</h3>
-      <form id="checkout-form">
-        <div class="form-group">
-          <label for="fullName">Full Name *</label>
-          <input type="text" id="fullName" required />
-        </div>
-        <div class="form-group">
-          <label for="email">Email *</label>
-          <input type="email" id="email" required />
-        </div>
-        <div class="form-group">
-          <label for="address">Street Address *</label>
-          <input type="text" id="address" required />
-        </div>
-        <div class="form-group">
-          <label for="city">City *</label>
-          <input type="text" id="city" required />
-        </div>
-        <div class="form-group">
-          <label for="state">State *</label>
-          <input type="text" id="state" required />
-        </div>
-        <div class="form-group">
-          <label for="zip">Zip *</label>
-          <input type="text" id="zip" required />
-        </div>
-        <div class="form-group">
-          <label for="paymentMethod">Payment Method *</label>
-          <select id="paymentMethod" required>
-            <option value="">Select a payment option...</option>
-            <option value="Bitcoin">Bitcoin</option>
-            <option value="Ethereum">Ethereum</option>
-          </select>
-        </div>
-        <button type="submit" style="width: 100%; padding: 12px; font-size: 16px;">Submit Order</button>
-      </form>
-    </div>
-  </div>
+<h3>Customer & Payment Details</h3>
+<form id="checkout-form">
+<div class="form-group">
+<label for="fullName">Full Name *</label>
+<input type="text" id="fullName" required />
+</div>
+<div class="form-group">
+<label for="email">Email *</label>
+<input type="email" id="email" required />
+</div>
+<div class="form-group">
+<label for="address">Street Address *</label>
+<input type="text" id="address" required />
+</div>
+<div class="form-group">
+<label for="city">City *</label>
+<input type="text" id="city" required />
+</div>
+<div class="form-group">
+<label for="state">State *</label>
+<input type="text" id="state" required />
+</div>
+<div class="form-group">
+<label for="zip">Zip *</label>
+<input type="text" id="zip" required />
+</div>
+<div class="form-group">
+<label for="paymentMethod">Payment Method *</label>
+<select id="paymentMethod" required>
+<option value="">Select a payment option...</option>
+<option value="Bitcoin">Bitcoin</option>
+<option value="Ethereum">Ethereum</option>
+</select>
+</div>
+<button type="submit" style="width: 100%; padding: 12px; font-size: 16px;">Submit Order</button>
+</form>
+</div>
+</div>
 
-  <!-- Order Summary, Crypto Payment & TXID Confirmation Section -->
-  <div id="order-summary-section">
-    <h2>Order Summary</h2>
-    <span id="payment-status-badge" class="status-badge status-pending">Status: Awaiting Crypto Payment & TXID</span>
+<!-- Order Summary, Crypto Payment & TXID Confirmation Section -->
+<div id="order-summary-section">
+<h2>Order Summary</h2>
+<span id="payment-status-badge" class="status-badge status-pending">Status: Awaiting Crypto Payment & TXID</span>
 
-    <!-- Step 1: Automated Crypto Payment Link & QR Code -->
-    <div class="crypto-box">
-      <h3 style="margin-bottom: 6px;">Step 1: Send <span id="crypto-currency-label">Crypto</span> Payment</h3>
-      <p style="margin: 4px 0; font-size: 14px;">Total Amount Due: <strong>$<span id="crypto-usd-amount">0.00</span> USD</strong></p>
-      
-      <a id="crypto-payment-link" href="#" class="crypto-link">Open Wallet App to Pay</a>
-      <img id="crypto-qr-code" class="qr-img" src="" alt="Crypto Payment QR Code" width="180" height="180" />
+<!-- Step 1: Automated Crypto Payment Link & QR Code -->
+<div class="crypto-box">
+<h3 style="margin-bottom: 6px;">Step 1: Send <span id="crypto-currency-label">Crypto</span> Payment</h3>
+<p style="margin: 4px 0; font-size: 14px;">Total Amount Due: <strong>$<span id="crypto-usd-amount">0.00</span> USD</strong></p>
+<a id="crypto-payment-link" href="#" class="crypto-link">Open Wallet App to Pay</a>
+<img id="crypto-qr-code" class="qr-img" src="" alt="Crypto Payment QR Code" width="180" height="180" />
 
-      <p style="margin: 6px 0 2px; font-size: 13px;">Or send manually to this <span id="crypto-network-name"></span> address:</p>
-      <div class="wallet-address-box" id="wallet-address-display"></div>
-      <button type="button" class="btn-secondary" onclick="copyWalletAddress()">Copy Wallet Address</button>
-    </div>
+<p style="margin: 6px 0 2px; font-size: 13px;">Or send manually to this <span id="crypto-network-name"></span> address:</p>
+<div class="wallet-address-box" id="wallet-address-display"></div>
+<button type="button" class="btn-secondary" onclick="copyWalletAddress()">Copy Wallet Address</button>
+</div>
 
-    <!-- Step 2: Transaction ID (TXID) Confirmation -->
-    <div class="txid-step">
-      <h3 style="margin-bottom: 6px;">Step 2: Confirm Your Transaction ID (TXID)</h3>
-      <p style="margin: 0 0 10px; font-size: 13px;">
-        After sending your payment, paste your Transaction ID / Hash below to unlock the order submission buttons.
-      </p>
-      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <input 
-          type="text" 
-          id="txid-input" 
-          placeholder="Paste your Transaction ID (TXID / Hash) here..." 
-          style="flex: 1; min-width: 220px;" 
-        />
-        <button type="button" id="confirm-txid-btn" onclick="confirmTransactionId()">Confirm TXID</button>
-      </div>
-      <p id="txid-feedback" style="margin: 8px 0 0; font-size: 13px; font-weight: bold;"></p>
-    </div>
+<!-- Step 2: Transaction ID (TXID) Confirmation -->
+<div class="txid-step">
+<h3 style="margin-bottom: 6px;">Step 2: Confirm Your Transaction ID (TXID)</h3>
+<p style="margin: 0 0 10px; font-size: 13px;">
+After sending your payment, paste your Transaction ID / Hash below to unlock the order submission buttons.
+</p>
+<div style="display: flex; gap: 8px; flex-wrap: wrap;">
+<input
+type="text"
+id="txid-input"
+placeholder="Paste your Transaction ID (TXID / Hash) here..."
+style="flex: 1; min-width: 220px;"
+/>
+<button type="button" id="confirm-txid-btn" onclick="confirmTransactionId()">Confirm TXID</button>
+</div>
+<p id="txid-feedback" style="margin: 8px 0 0; font-size: 13px; font-weight: bold;"></p>
+</div>
 
-    <!-- Step 3: Final Order Text & Email Submission -->
-    <p style="font-size: 14px;">Click below to open your email app with this order filled out, or copy and paste it manually:</p>
-    <textarea id="order-text-output" rows="13" readonly style="font-family: monospace; background: #f9f9f9;"></textarea>
+<!-- Step 3: Final Order Text & Email Submission -->
+<p style="font-size: 14px;">Click below to open your email app with this order filled out, or copy and paste it manually:</p>
+<textarea id="order-text-output" rows="13" readonly style="font-family: monospace; background: #f9f9f9;"></textarea>
 
-    <div class="action-buttons">
-      <button type="button" id="send-email-btn" disabled onclick="sendViaEmail()">Send via Email</button>
-      <button type="button" id="copy-order-btn" class="btn-secondary" disabled onclick="copyOrderToClipboard()">Copy to Clipboard</button>
-    </div>
-  </div>
+<div class="action-buttons">
+<button type="button" id="send-email-btn" disabled onclick="sendViaEmail()">Send via Email</button>
+<button type="button" id="copy-order-btn" class="btn-secondary" disabled onclick="copyOrderToClipboard()">Copy to Clipboard</button>
+</div>
+</div>
 </div>
 
 <script>
-  // ==========================================
-  // 1. CONFIGURE YOUR STORE SETTINGS HERE
-  // ==========================================
+// ==========================================
+// 1. CONFIGURE YOUR STORE SETTINGS HERE
+// ==========================================
 
 const STORE_EMAIL = "BasicsAAS1@gmail.com";
 const FLAT_RATE_SHIPPING = 20.00;
 // Replace these with your actual Bitcoin and Ethereum wallet addresses!
 const WALLETS = {
-Bitcoin: "bc1qdxs33pyywsak9a4c7ua5rjde5g4zmtlt2kkjyl",
-Ethereum: "0xafcfbd8a25111fa287295d76cf7200dc8b0bbcc0"
+Bitcoin: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
+Ethereum: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
 };
-  // Your exact product list using image and desc
-  const products = [
-    { id: 1, image: "BasicsIconThumbnail.png", name: "Testosterone E", price: 30.00, desc: "250mg/ml" },
-    { id: 2, image: "BasicsIconThumbnail.png", name: "Testosterone E", price: 35.00, desc: "300mg/ml" },
-    { id: 3, image: "BasicsIconThumbnail.png", name: "Testosterone C", price: 30.00, desc: "200mg/ml" },
-    { id: 4, image: "BasicsIconThumbnail.png", name: "Testosterone C", price: 35.00, desc: "250mg/ml" },
-    { id: 5, image: "BasicsIconThumbnail.png", name: "Testosterone P", price: 30.00, desc: "100mg/ml" },
-    { id: 6, image: "BasicsIconThumbnail.png", name: "Sustanon 250", price: 40.00, desc: "250mg/ml" },
-    { id: 7, image: "BasicsIconThumbnail.png", name: "Sustanon 250", price: 45.00, desc: "300mg/ml" },
-    { id: 8, image: "BasicsIconThumbnail.png", name: "Nandrolone Decanoate (DECA)", price: 30.00, desc: "200mg/ml" },
-    { id: 9, image: "BasicsIconThumbnail.png", name: "Nandrolone Phenylpropionate (NPP)", price: 40.00, desc: "100mg/ml" },
-    { id: 10, image: "BasicsIconThumbnail.png", name: "Trenbolone E", price: 55.00, desc: "200mg/ml" },
-    { id: 11, image: "BasicsIconThumbnail.png", name: "Trenbolone A", price: 45.00, desc: "100mg/ml" }
-  ];
+// Your exact product list using image and desc
+const products = [
+{ id: 1, image: "BasicsIconThumbnail.png", name: "Testosterone E", price: 30.00, desc: "250mg/ml" },
+{ id: 2, image: "BasicsIconThumbnail.png", name: "Testosterone E", price: 35.00, desc: "300mg/ml" },
+{ id: 3, image: "BasicsIconThumbnail.png", name: "Testosterone C", price: 30.00, desc: "200mg/ml" },
+{ id: 4, image: "BasicsIconThumbnail.png", name: "Testosterone C", price: 35.00, desc: "250mg/ml" },
+{ id: 5, image: "BasicsIconThumbnail.png", name: "Testosterone P", price: 30.00, desc: "100mg/ml" },
+{ id: 6, image: "BasicsIconThumbnail.png", name: "Sustanon 250", price: 40.00, desc: "250mg/ml" },
+{ id: 7, image: "BasicsIconThumbnail.png", name: "Sustanon 250", price: 45.00, desc: "300mg/ml" },
+{ id: 8, image: "BasicsIconThumbnail.png", name: "Nandrolone Decanoate (DECA)", price: 30.00, desc: "200mg/ml" },
+{ id: 9, image: "BasicsIconThumbnail.png", name: "Nandrolone Phenylpropionate (NPP)", price: 40.00, desc: "100mg/ml" },
+{ id: 10, image: "BasicsIconThumbnail.png", name: "Trenbolone E", price: 55.00, desc: "200mg/ml" },
+{ id: 11, image: "BasicsIconThumbnail.png", name: "Trenbolone A", price: 45.00, desc: "100mg/ml" }
+];
 
-  function renderProducts() {
-    const list = document.getElementById("product-list");
-    list.innerHTML = "";
+function renderProducts() {
+const list = document.getElementById("product-list");
+list.innerHTML = "";
 
-    products.forEach(function(p) {
-      const itemDiv = document.createElement("div");
-      itemDiv.className = "product-item";
+products.forEach(function(p) {
+const itemDiv = document.createElement("div");
+itemDiv.className = "product-item";
 
-      const infoDiv = document.createElement("div");
-      infoDiv.className = "product-info";
+const infoDiv = document.createElement("div");
+infoDiv.className = "product-info";
 
-      if (p.image) {
-        const img = document.createElement("img");
-        img.src = p.image;
-        img.alt = p.name;
-        img.className = "product-icon";
-        img.onerror = function() { this.style.display = "none"; };
-        infoDiv.appendChild(img);
-      }
+if (p.image) {
+const img = document.createElement("img");
+img.src = p.image;
+img.alt = p.name;
+img.className = "product-icon";
+img.onerror = function() { this.style.display = "none"; };
+infoDiv.appendChild(img);
+}
 
-      const textDiv = document.createElement("div");
+const textDiv = document.createElement("div");
 const descText = p.desc ? " <small>(" + p.desc + ")</small>" : "";
+textDiv.innerHTML = "<strong>" + p.name + "</strong>" + descText + "<br /><span>$" + p.price.toFixed(2) + "</span>";
+infoDiv.appendChild(textDiv);
 
-textDiv.innerHTML =
-    "<strong>" + p.name + "</strong>" +
-    descText +
-    "<br /><span>$" + p.price.toFixed(2) + "</span>";
-      infoDiv.appendChild(textDiv);
+const btn = document.createElement("button");
+btn.type = "button";
+btn.textContent = "Add to Cart";
+btn.onclick = function() { addToCart(p.id); };
 
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.textContent = "Add to Cart";
-      btn.onclick = function() { addToCart(p.id); };
-
-      itemDiv.appendChild(infoDiv);
-      itemDiv.appendChild(btn);
-      list.appendChild(itemDiv);
-    });
-  }
+itemDiv.appendChild(infoDiv);
+itemDiv.appendChild(btn);
+list.appendChild(itemDiv);
+});
+}
 
 // ==========================================
 // 2. STORE & CART LOGIC (DOM-SAFE)
@@ -401,7 +396,35 @@ let cart = [];
 let currentOrderData = null;
 let confirmedTxid = "";
 // <--- THIS IS WHERE renderProducts() GOES --->
-
+function renderProducts() {
+const list = document.getElementById("product-list");
+list.innerHTML = "";
+products.forEach(function(p) {
+const itemDiv = document.createElement("div");
+itemDiv.className = "product-item";
+const infoDiv = document.createElement("div");
+infoDiv.className = "product-info";
+if (p.icon) {
+const img = document.createElement("img");
+img.src = p.icon;
+img.alt = p.name;
+img.className = "product-icon";
+img.onerror = function() { this.style.display = "none"; };
+infoDiv.appendChild(img);
+}
+const textDiv = document.createElement("div");
+textDiv.innerHTML = "" + p.name + "
+$" + p.price.toFixed(2) + "";
+infoDiv.appendChild(textDiv);
+const btn = document.createElement("button");
+btn.type = "button";
+btn.textContent = "Add to Cart";
+btn.onclick = function() { addToCart(p.id); };
+itemDiv.appendChild(infoDiv);
+itemDiv.appendChild(btn);
+list.appendChild(itemDiv);
+});
+}
 function addToCart(productId) {
 const product = products.find(function(p) { return p.id === productId; });
 const existing = cart.find(function(item) { return item.id === productId; });
@@ -442,12 +465,8 @@ subtotal += lineTotal;
 const row = document.createElement("div");
 row.className = "product-item";
 const left = document.createElement("div");
-//left.innerHTML = "" + item.name + " ($" + item.price.toFixed(2) + " ea)
-//Line Total: $" + lineTotal.toFixed(2) + "";
-left.innerHTML =
-    item.name + " ($" + item.price.toFixed(2) + " ea)<br>" +
-    "Line Total: $" + lineTotal.toFixed(2);
-  
+left.innerHTML = "" + item.name + " ($" + item.price.toFixed(2) + " ea)
+Line Total: $" + lineTotal.toFixed(2) + "";
 const right = document.createElement("div");
 const minusBtn = document.createElement("button");
 minusBtn.type = "button";
@@ -519,21 +538,15 @@ document.getElementById("wallet-address-display").textContent = walletAddress;
 const payLink = document.getElementById("crypto-payment-link");
 payLink.href = uriScheme;
 payLink.textContent = "Pay with " + paymentMethod + " Wallet App";
-
-  const qrUrl =
-    "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=" +
-    encodeURIComponent(uriScheme);
-
+const qrUrl = "qrserver.com" + encodeURIComponent(uriScheme);
 document.getElementById("crypto-qr-code").src = qrUrl;
-
 //const itemLines = cart.map(function(i) {
 //return i.name + " (x" + i.qty + ") - $" + (i.price * i.qty).toFixed(2);
 //}).join("\n");
 const itemLines = cart.map(function(i) {
-  return i.name + " (x" + i.qty + ") - $" + (i.price * i.qty).toFixed(2);
+return i.name + " (x" + i.qty + ") - $" + (i.price * i.qty).toFixed(2);
 }).join("\n");
 
-  
 currentOrderData = {
 orderId: orderId,
 items: itemLines,
@@ -626,6 +639,6 @@ window.location.href = "mailto:" + STORE_EMAIL + "?subject=" + subject + "&body=
 // Initialize storefront on load
 renderProducts();
 
-  </script>
+</script>
 </body>
 </html>
