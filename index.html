@@ -327,67 +327,33 @@ style="flex: 1; min-width: 220px;"
 </div>
 
 <script>
+<script>
 // ==========================================
 // 1. CONFIGURE YOUR STORE SETTINGS HERE
 // ==========================================
 
 const STORE_EMAIL = "BasicsAAS1@gmail.com";
 const FLAT_RATE_SHIPPING = 20.00;
+
 // Replace these with your actual Bitcoin and Ethereum wallet addresses!
 const WALLETS = {
-Bitcoin: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
-Ethereum: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
+  Bitcoin: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
+  Ethereum: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
 };
-// Your exact product list using image and desc
+
 const products = [
-{ id: 1, image: "BasicsIconThumbnail.png", name: "Testosterone E", price: 30.00, desc: "250mg/ml" },
-{ id: 2, image: "BasicsIconThumbnail.png", name: "Testosterone E", price: 35.00, desc: "300mg/ml" },
-{ id: 3, image: "BasicsIconThumbnail.png", name: "Testosterone C", price: 30.00, desc: "200mg/ml" },
-{ id: 4, image: "BasicsIconThumbnail.png", name: "Testosterone C", price: 35.00, desc: "250mg/ml" },
-{ id: 5, image: "BasicsIconThumbnail.png", name: "Testosterone P", price: 30.00, desc: "100mg/ml" },
-{ id: 6, image: "BasicsIconThumbnail.png", name: "Sustanon 250", price: 40.00, desc: "250mg/ml" },
-{ id: 7, image: "BasicsIconThumbnail.png", name: "Sustanon 250", price: 45.00, desc: "300mg/ml" },
-{ id: 8, image: "BasicsIconThumbnail.png", name: "Nandrolone Decanoate (DECA)", price: 30.00, desc: "200mg/ml" },
-{ id: 9, image: "BasicsIconThumbnail.png", name: "Nandrolone Phenylpropionate (NPP)", price: 40.00, desc: "100mg/ml" },
-{ id: 10, image: "BasicsIconThumbnail.png", name: "Trenbolone E", price: 55.00, desc: "200mg/ml" },
-{ id: 11, image: "BasicsIconThumbnail.png", name: "Trenbolone A", price: 45.00, desc: "100mg/ml" }
+  { id: 1, image: "BasicsIconThumbnail.png", name: "Testosterone E", price: 30.00, desc: "250mg/ml" },
+  { id: 2, image: "BasicsIconThumbnail.png", name: "Testosterone E", price: 35.00, desc: "300mg/ml" },
+  { id: 3, image: "BasicsIconThumbnail.png", name: "Testosterone C", price: 30.00, desc: "200mg/ml" },
+  { id: 4, image: "BasicsIconThumbnail.png", name: "Testosterone C", price: 35.00, desc: "250mg/ml" },
+  { id: 5, image: "BasicsIconThumbnail.png", name: "Testosterone P", price: 30.00, desc: "100mg/ml" },
+  { id: 6, image: "BasicsIconThumbnail.png", name: "Sustanon 250", price: 40.00, desc: "250mg/ml" },
+  { id: 7, image: "BasicsIconThumbnail.png", name: "Sustanon 250", price: 45.00, desc: "300mg/ml" },
+  { id: 8, image: "BasicsIconThumbnail.png", name: "Nandrolone Decanoate (DECA)", price: 30.00, desc: "200mg/ml" },
+  { id: 9, image: "BasicsIconThumbnail.png", name: "Nandrolone Phenylpropionate (NPP)", price: 40.00, desc: "100mg/ml" },
+  { id: 10, image: "BasicsIconThumbnail.png", name: "Trenbolone E", price: 55.00, desc: "200mg/ml" },
+  { id: 11, image: "BasicsIconThumbnail.png", name: "Trenbolone A", price: 45.00, desc: "100mg/ml" }
 ];
-
-function renderProducts() {
-const list = document.getElementById("product-list");
-list.innerHTML = "";
-
-products.forEach(function(p) {
-const itemDiv = document.createElement("div");
-itemDiv.className = "product-item";
-
-const infoDiv = document.createElement("div");
-infoDiv.className = "product-info";
-
-if (p.image) {
-const img = document.createElement("img");
-img.src = p.image;
-img.alt = p.name;
-img.className = "product-icon";
-img.onerror = function() { this.style.display = "none"; };
-infoDiv.appendChild(img);
-}
-
-const textDiv = document.createElement("div");
-const descText = p.desc ? " <small>(" + p.desc + ")</small>" : "";
-textDiv.innerHTML = "<strong>" + p.name + "</strong>" + descText + "<br /><span>$" + p.price.toFixed(2) + "</span>";
-infoDiv.appendChild(textDiv);
-
-const btn = document.createElement("button");
-btn.type = "button";
-btn.textContent = "Add to Cart";
-btn.onclick = function() { addToCart(p.id); };
-
-itemDiv.appendChild(infoDiv);
-itemDiv.appendChild(btn);
-list.appendChild(itemDiv);
-});
-}
 
 // ==========================================
 // 2. STORE & CART LOGIC (DOM-SAFE)
@@ -395,249 +361,233 @@ list.appendChild(itemDiv);
 let cart = [];
 let currentOrderData = null;
 let confirmedTxid = "";
-// <--- THIS IS WHERE renderProducts() GOES --->
+
 function renderProducts() {
-const list = document.getElementById("product-list");
-list.innerHTML = "";
-products.forEach(function(p) {
-const itemDiv = document.createElement("div");
-itemDiv.className = "product-item";
-const infoDiv = document.createElement("div");
-infoDiv.className = "product-info";
-if (p.icon) {
-const img = document.createElement("img");
-img.src = p.icon;
-img.alt = p.name;
-img.className = "product-icon";
-img.onerror = function() { this.style.display = "none"; };
-infoDiv.appendChild(img);
+  const list = document.getElementById("product-list");
+  list.innerHTML = "";
+
+  products.forEach(function(p) {
+    const itemDiv = document.createElement("div");
+    itemDiv.className = "product-item";
+
+    const infoDiv = document.createElement("div");
+    infoDiv.className = "product-info";
+
+    if (p.image) {
+      const img = document.createElement("img");
+      img.src = p.image;
+      img.alt = p.name;
+      img.className = "product-icon";
+      img.onerror = function() { this.style.display = "none"; };
+      infoDiv.appendChild(img);
+    }
+
+    const textDiv = document.createElement("div");
+    const descText = p.desc ? " <small>(" + p.desc + ")</small>" : "";
+    textDiv.innerHTML = "<strong>" + p.name + "</strong>" + descText + "<br /><span>$" + p.price.toFixed(2) + "</span>";
+    infoDiv.appendChild(textDiv);
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = "Add to Cart";
+    btn.onclick = function() { addToCart(p.id); };
+
+    itemDiv.appendChild(infoDiv);
+    itemDiv.appendChild(btn);
+    list.appendChild(itemDiv);
+  });
 }
-const textDiv = document.createElement("div");
-textDiv.innerHTML = "" + p.name + "
-$" + p.price.toFixed(2) + "";
-infoDiv.appendChild(textDiv);
-const btn = document.createElement("button");
-btn.type = "button";
-btn.textContent = "Add to Cart";
-btn.onclick = function() { addToCart(p.id); };
-itemDiv.appendChild(infoDiv);
-itemDiv.appendChild(btn);
-list.appendChild(itemDiv);
-});
-}
+
 function addToCart(productId) {
-const product = products.find(function(p) { return p.id === productId; });
-const existing = cart.find(function(item) { return item.id === productId; });
-if (existing) {
-existing.qty += 1;
-} else {
-cart.push({ id: product.id, name: product.name, price: product.price, qty: 1 });
+  const product = products.find(function(p) { return p.id === productId; });
+  const existing = cart.find(function(item) { return item.id === productId; });
+  const label = product.desc ? product.name + " (" + product.desc + ")" : product.name;
+
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ id: product.id, name: label, price: product.price, qty: 1 });
+  }
+  updateCartUI();
 }
-updateCartUI();
-}
+
 function changeQty(productId, delta) {
-const item = cart.find(function(i) { return i.id === productId; });
-if (!item) return;
-item.qty += delta;
-if (item.qty <= 0) {
-cart = cart.filter(function(i) { return i.id !== productId; });
+  const item = cart.find(function(i) { return i.id === productId; });
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) {
+    cart = cart.filter(function(i) { return i.id !== productId; });
+  }
+  updateCartUI();
 }
-updateCartUI();
-}
+
 function removeItem(productId) {
-cart = cart.filter(function(i) { return i.id !== productId; });
-updateCartUI();
+  cart = cart.filter(function(i) { return i.id !== productId; });
+  updateCartUI();
 }
+
 function updateCartUI() {
-const cartDiv = document.getElementById("cart-items");
-cartDiv.innerHTML = "";
-if (cart.length === 0) {
-cartDiv.innerHTML = "Your cart is empty.";
-document.getElementById("subtotal").textContent = "0.00";
-document.getElementById("shipping").textContent = "0.00";
-document.getElementById("total").textContent = "0.00";
-return;
+  const cartDiv = document.getElementById("cart-items");
+  cartDiv.innerHTML = "";
+
+  if (cart.length === 0) {
+    cartDiv.innerHTML = "<p>Your cart is empty.</p>";
+    document.getElementById("subtotal").textContent = "0.00";
+    document.getElementById("shipping").textContent = "0.00";
+    document.getElementById("total").textContent = "0.00";
+    return;
+  }
+
+  let subtotal = 0;
+  cart.forEach(function(item) {
+    const lineTotal = item.price * item.qty;
+    subtotal += lineTotal;
+
+    const row = document.createElement("div");
+    row.className = "product-item";
+
+    const left = document.createElement("div");
+    left.innerHTML = "<strong>" + item.name + "</strong> ($" + item.price.toFixed(2) + " ea)<br /><small>Line Total: $" + lineTotal.toFixed(2) + "</small>";
+
+    const right = document.createElement("div");
+
+    const minusBtn = document.createElement("button");
+    minusBtn.type = "button";
+    minusBtn.className = "qty-btn";
+    minusBtn.textContent = "-";
+    minusBtn.onclick = function() { changeQty(item.id, -1); };
+
+    const qtySpan = document.createElement("span");
+    qtySpan.textContent = " " + item.qty + " ";
+
+    const plusBtn = document.createElement("button");
+    plusBtn.type = "button";
+    plusBtn.className = "qty-btn";
+    plusBtn.textContent = "+";
+    plusBtn.onclick = function() { changeQty(item.id, 1); };
+
+    const remBtn = document.createElement("button");
+    remBtn.type = "button";
+    remBtn.className = "remove-btn";
+    remBtn.textContent = "Remove";
+    remBtn.onclick = function() { removeItem(item.id); };
+
+    right.appendChild(minusBtn);
+    right.appendChild(qtySpan);
+    right.appendChild(plusBtn);
+    right.appendChild(remBtn);
+
+    row.appendChild(left);
+    row.appendChild(right);
+    cartDiv.appendChild(row);
+  });
+
+  const total = subtotal + FLAT_RATE_SHIPPING;
+  document.getElementById("subtotal").textContent = subtotal.toFixed(2);
+  document.getElementById("shipping").textContent = FLAT_RATE_SHIPPING.toFixed(2);
+  document.getElementById("total").textContent = total.toFixed(2);
 }
-let subtotal = 0;
-cart.forEach(function(item) {
-const lineTotal = item.price * item.qty;
-subtotal += lineTotal;
-const row = document.createElement("div");
-row.className = "product-item";
-const left = document.createElement("div");
-left.innerHTML = "" + item.name + " ($" + item.price.toFixed(2) + " ea)
-Line Total: $" + lineTotal.toFixed(2) + "";
-const right = document.createElement("div");
-const minusBtn = document.createElement("button");
-minusBtn.type = "button";
-minusBtn.className = "qty-btn";
-minusBtn.textContent = "-";
-minusBtn.onclick = function() { changeQty(item.id, -1); };
-const qtySpan = document.createElement("span");
-qtySpan.textContent = " " + item.qty + " ";
-const plusBtn = document.createElement("button");
-plusBtn.type = "button";
-plusBtn.className = "qty-btn";
-plusBtn.textContent = "+";
-plusBtn.onclick = function() { changeQty(item.id, 1); };
-const remBtn = document.createElement("button");
-remBtn.type = "button";
-remBtn.className = "remove-btn";
-remBtn.textContent = "Remove";
-remBtn.onclick = function() { removeItem(item.id); };
-right.appendChild(minusBtn);
-right.appendChild(qtySpan);
-right.appendChild(plusBtn);
-right.appendChild(remBtn);
-row.appendChild(left);
-row.appendChild(right);
-cartDiv.appendChild(row);
-});
-const total = subtotal + FLAT_RATE_SHIPPING;
-document.getElementById("subtotal").textContent = subtotal.toFixed(2);
-document.getElementById("shipping").textContent = FLAT_RATE_SHIPPING.toFixed(2);
-document.getElementById("total").textContent = total.toFixed(2);
-}
+
 function generateOrderNumber() {
-const now = new Date();
-const yyyy = now.getFullYear();
-const mm = String(now.getMonth() + 1).padStart(2, "0");
-const dd = String(now.getDate()).padStart(2, "0");
-const rand = Math.floor(1000 + Math.random() * 9000);
-return "ORD-" + yyyy + mm + dd + "-" + rand;
+  const now = new Date();
+  const yyyy = now.getFullYear();
+  const mm = String(now.getMonth() + 1).padStart(2, "0");
+  const dd = String(now.getDate()).padStart(2, "0");
+  const rand = Math.floor(1000 + Math.random() * 9000);
+  return "ORD-" + yyyy + mm + dd + "-" + rand;
 }
+
 // ==========================================
 // 3. SUBMIT ORDER -> SHOW CRYPTO LINK & QR
 // ==========================================
 document.getElementById("checkout-form").addEventListener("submit", function(e) {
-e.preventDefault();
-if (cart.length === 0) {
-alert("Please add at least one item to your cart before submitting.");
-return;
-}
-const paymentMethod = document.getElementById("paymentMethod").value;
-const walletAddress = WALLETS[paymentMethod];
-const subtotal = cart.reduce(function(sum, item) { return sum + item.price * item.qty; }, 0);
-const total = subtotal + FLAT_RATE_SHIPPING;
-const orderId = generateOrderNumber();
-confirmedTxid = "";
-document.getElementById("txid-input").value = "";
-document.getElementById("txid-feedback").textContent = "";
-document.getElementById("send-email-btn").disabled = true;
-document.getElementById("copy-order-btn").disabled = true;
-const badge = document.getElementById("payment-status-badge");
-badge.className = "status-badge status-pending";
-badge.textContent = "Status: Awaiting Crypto Payment & TXID";
-const uriScheme = paymentMethod === "Bitcoin"
-? "bitcoin:" + walletAddress + "?label=" + encodeURIComponent(orderId)
-: "ethereum:" + walletAddress;
-document.getElementById("crypto-currency-label").textContent = paymentMethod;
-document.getElementById("crypto-network-name").textContent = paymentMethod;
-document.getElementById("crypto-usd-amount").textContent = total.toFixed(2);
-document.getElementById("wallet-address-display").textContent = walletAddress;
-const payLink = document.getElementById("crypto-payment-link");
-payLink.href = uriScheme;
-payLink.textContent = "Pay with " + paymentMethod + " Wallet App";
-const qrUrl = "qrserver.com" + encodeURIComponent(uriScheme);
-document.getElementById("crypto-qr-code").src = qrUrl;
-//const itemLines = cart.map(function(i) {
-//return i.name + " (x" + i.qty + ") - $" + (i.price * i.qty).toFixed(2);
-//}).join("\n");
-const itemLines = cart.map(function(i) {
-return i.name + " (x" + i.qty + ") - $" + (i.price * i.qty).toFixed(2);
-}).join("\n");
+  e.preventDefault();
+  if (cart.length === 0) {
+    alert("Please add at least one item to your cart before submitting.");
+    return;
+  }
 
-currentOrderData = {
-orderId: orderId,
-items: itemLines,
-subtotal: subtotal.toFixed(2),
-shipping: FLAT_RATE_SHIPPING.toFixed(2),
-total: total.toFixed(2),
-paymentMethod: paymentMethod,
-walletAddress: walletAddress,
-fullName: document.getElementById("fullName").value.trim(),
-email: document.getElementById("email").value.trim(),
-address: document.getElementById("address").value.trim(),
-city: document.getElementById("city").value.trim(),
-state: document.getElementById("state").value.trim(),
-zip: document.getElementById("zip").value.trim()
-};
-renderOrderText();
-const summaryBox = document.getElementById("order-summary-section");
-summaryBox.style.display = "block";
-summaryBox.scrollIntoView({ behavior: "smooth" });
+  const paymentMethod = document.getElementById("paymentMethod").value;
+  const walletAddress = WALLETS[paymentMethod];
+  const subtotal = cart.reduce(function(sum, item) { return sum + item.price * item.qty; }, 0);
+  const total = subtotal + FLAT_RATE_SHIPPING;
+  const orderId = generateOrderNumber();
+
+  confirmedTxid = "";
+  document.getElementById("txid-input").value = "";
+  document.getElementById("txid-feedback").textContent = "";
+  document.getElementById("send-email-btn").disabled = true;
+  document.getElementById("copy-order-btn").disabled = true;
+
+  const badge = document.getElementById("payment-status-badge");
+  badge.className = "status-badge status-pending";
+  badge.textContent = "Status: Awaiting Crypto Payment & TXID";
+
+  const uriScheme = paymentMethod === "Bitcoin"
+    ? "bitcoin:" + walletAddress + "?label=" + encodeURIComponent(orderId)
+    : "ethereum:" + walletAddress;
+
+  document.getElementById("crypto-currency-label").textContent = paymentMethod;
+  document.getElementById("crypto-network-name").textContent = paymentMethod;
+  document.getElementById("crypto-usd-amount").textContent = total.toFixed(2);
+  document.getElementById("wallet-address-display").textContent = walletAddress;
+
+  const payLink = document.getElementById("crypto-payment-link");
+  payLink.href = uriScheme;
+  payLink.textContent = "Pay with " + paymentMethod + " Wallet App";
+
+  const qrUrl = "https://qrserver.com" + encodeURIComponent(uriScheme);
+  document.getElementById("crypto-qr-code").src = qrUrl;
+
+  const itemLines = cart.map(function(i) {
+    return i.name + " (x" + i.qty + ") - $" + (i.price * i.qty).toFixed(2);
+  }).join(String.fromCharCode(10));
+
+  currentOrderData = {
+    orderId: orderId,
+    items: itemLines,
+    subtotal: subtotal.toFixed(2),
+    shipping: FLAT_RATE_SHIPPING.toFixed(2),
+    total: total.toFixed(2),
+    paymentMethod: paymentMethod,
+    walletAddress: walletAddress,
+    fullName: document.getElementById("fullName").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    address: document.getElementById("address").value.trim(),
+    city: document.getElementById("city").value.trim(),
+    state: document.getElementById("state").value.trim(),
+    zip: document.getElementById("zip").value.trim()
+  };
+
+  renderOrderText();
+
+  const summaryBox = document.getElementById("order-summary-section");
+  summaryBox.style.display = "block";
+  summaryBox.scrollIntoView({ behavior: "smooth" });
 });
+
 // ==========================================
 // 4. TXID CONFIRMATION STEP
 // ==========================================
 function confirmTransactionId() {
-const rawTxid = document.getElementById("txid-input").value.trim();
-const feedback = document.getElementById("txid-feedback");
-if (rawTxid.length < 20 || /\s/.test(rawTxid)) {
-feedback.style.color = "#c62828";
-feedback.textContent = "Please enter a valid Transaction ID / Hash (at least 20 characters, no spaces).";
-return;
-}
-confirmedTxid = rawTxid;
-feedback.style.color = "#2e7d32";
-feedback.textContent = "Transaction ID confirmed! Your order summary is updated and ready to send.";
-const badge = document.getElementById("payment-status-badge");
-badge.className = "status-badge status-confirmed";
-badge.textContent = "Status: Payment Submitted (TXID Confirmed)";
-document.getElementById("send-email-btn").disabled = false;
-document.getElementById("copy-order-btn").disabled = false;
-renderOrderText();
-}
-function renderOrderText() {
-if (!currentOrderData) return;
-const d = currentOrderData;
-const txidLine = confirmedTxid
-? "Transaction ID (TXID): " + confirmedTxid + "\nPayment Status: Submitted (Pending Blockchain Verification)"
-: "Transaction ID (TXID): [Pending Customer Payment]";
-const summary =
-"New Order Request - " + d.orderId + "\n" +
-"========================================\n" +
-"Order ID: " + d.orderId + "\n\n" +
-"Items Ordered:\n" + d.items + "\n\n" +
-"Subtotal: $" + d.subtotal + "\n" +
-"Flat Rate Shipping: $" + d.shipping + "\n" +
-"Total Due: $" + d.total + "\n\n" +
-"Payment Method: " + d.paymentMethod + "\n" +
-"Paid To Wallet: " + d.walletAddress + "\n" +
-txidLine + "\n\n" +
-"Customer Information:\n" +
-"Name: " + d.fullName + "\n" +
-"Email: " + d.email + "\n" +
-"Street Address: " + d.address + "\n" +
-"City: " + d.city + "\n" +
-"State: " + d.state + "\n" +
-"Zip: " + d.zip + "\n" +
-"========================================";
-document.getElementById("order-text-output").value = summary;
-}
-// ==========================================
-// 5. HELPER ACTIONS (COPY & MAILTO)
-// ==========================================
-function copyWalletAddress() {
-const addr = document.getElementById("wallet-address-display").textContent;
-navigator.clipboard.writeText(addr).then(function() {
-alert("Wallet address copied to clipboard!");
-});
-}
-function copyOrderToClipboard() {
-const text = document.getElementById("order-text-output").value;
-navigator.clipboard.writeText(text).then(function() {
-alert("Order summary copied to clipboard!");
-});
-}
-function sendViaEmail() {
-if (!currentOrderData || !confirmedTxid) return;
-const subject = encodeURIComponent("New Order Request - " + currentOrderData.orderId);
-const body = encodeURIComponent(document.getElementById("order-text-output").value);
-window.location.href = "mailto:" + STORE_EMAIL + "?subject=" + subject + "&body=" + body;
-}
-// Initialize storefront on load
-renderProducts();
+  const rawTxid = document.getElementById("txid-input").value.trim();
+  const feedback = document.getElementById("txid-feedback");
+
+  if (rawTxid.length < 20 || /\s/.test(rawTxid)) {
+    feedback.style.color = "#c62828";
+    feedback.textContent = "Please enter a valid Transaction ID / Hash (at least 20 characters, no spaces).";
+    return;
+  }
+
+  confirmedTxid = rawTxid;
+  feedback.style.color = "#2e7d32";
+  feedback.textContent = "Transaction ID confirmed! Your order summary is updated and ready to send.";
+
+  const badge = document.getElementById("payment-status-badge");
+  badge.className = "status-badge status-confirmed";
+  badge.textContent = "Status: Payment Submitted (TXID Confirmed)";
+
+  document.getElementById("send-email-btn").disabled = false;
 
 </script>
 </body>
