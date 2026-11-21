@@ -1,374 +1,344 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BasicsAAS Storefront</title>
   <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background-color: #0D123D;
-      color: #1b2e1e;
-      margin: 0;
-      padding: 20px;
-      line-height: 1.5;
+    body { 
+      font-family: Arial, sans-serif; 
+      max-width: 900px; 
+      margin: 20px auto; 
+      padding: 0 15px; 
+      line-height: 1.6; 
+      color: #333; 
+      background-color: #2b2b2b; /* Dark grey background */
     }
-    .container {
-      max-width: 850px;
-      margin: 0 auto;
-      background: #BDBDBD;
-      padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    }
+    h1 { color: #ffffff; } /* White title text for contrast */
+    .container { display: flex; flex-wrap: wrap; gap: 20px; }
+    .products, .cart { flex: 1; min-width: 320px; border: 1px solid #444; padding: 20px; border-radius: 8px; background: #ffffff; }
+    .product-item, .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; }
+    
+    /* Banner */
     .banner {
       width: 100%;
-      max-height: auto;
+      max-height: 451px;
       object-fit: cover;
       border-radius: 8px;
       margin-bottom: 20px;
+      display: block;
     }
-    h1, h2, h3 {
-      color: #0D123D;
-      margin-top: 0;
+    /* Dark Blue Buttons */
+    button { background: #0d47a1; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-size: 14px; }
+    button:hover { background: #08306b; }
+
+    /* Product Info */
+    .product-item { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      gap: 12px;
+      padding: 12px 0; 
+      border-bottom: 1px solid #eee; 
     }
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-    @media (max-width: 700px) {
-      .grid { grid-template-columns: 1fr; }
-    }
-    .card {
-      border: 1px solid #0D123D;
-      border-radius: 8px;
-      padding: 16px;
-      background: #E8E8E8;
-    }
-    .product-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid #e0e0e0;
-    }
-    .product-item:last-child { border-bottom: none; }
     .product-info {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      flex: 1;
     }
-    .product-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 6px;
+    .product-img {
+      width: 60px;
+      height: 60px;
       object-fit: cover;
-      background: #e0e0e0;
-    }
-    button {
-      background-color: #45BBF6;
-      color: white;
-      border: none;
-      padding: 8px 14px;
       border-radius: 6px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 600;
+      border: 1px solid #ddd;
+      flex-shrink: 0;
     }
-    button:hover:not(:disabled) {
-      background-color: #00129A;
-    }
-    button:disabled {
-      background-color: #a5d6a7;
-      cursor: not-allowed;
-      opacity: 0.7;
-    }
-    .btn-secondary {
-      background-color: #455a64;
-    }
-    .btn-secondary:hover:not(:disabled) {
-      background-color: #263238;
-    }
-    .qty-btn {
-      padding: 4px 9px;
+    .product-desc {
       font-size: 13px;
-      margin: 0 3px;
+      color: #666;
+      margin: 3px 0 0;
+      line-height: 1.4;
     }
-    .remove-btn {
-      background-color: #c62828;
-      padding: 4px 8px;
-      font-size: 12px;
-      margin-left: 6px;
-    }
-    .remove-btn:hover { background-color: #8e0000; }
-    .form-group {
-      margin-bottom: 12px;
-    }
-    label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 4px;
-      font-size: 14px;
-    }
-    input, select, textarea {
-      width: 100%;
-      padding: 9px;
-      border: 1px solid #bdbdbd;
-      border-radius: 6px;
-      box-sizing: border-box;
-      font-size: 14px;
-    }
-    .totals {
-      margin-top: 14px;
-      padding-top: 10px;
-      border-top: 2px solid #00047D;
-      font-size: 15px;
-    }
-    .totals p {
-      margin: 5px 0;
-      display: flex;
-      justify-content: space-between;
-    }
-    .total-final {
-      font-size: 18px;
-      font-weight: bold;
-      color: #00047D;
-    }
-    #order-summary-section {
-      display: none;
-      margin-top: 25px;
-      border: 2px solid #2e7d32;
-      background: #ffffff;
-      border-radius: 8px;
-      padding: 20px;
-    }
-    .crypto-box {
-      background: #f1f8e9;
-      border: 1px solid #aed581;
-      border-radius: 8px;
-      padding: 16px;
-      margin-bottom: 18px;
-      text-align: center;
-    }
-    .wallet-address-box {
-      background: #ffffff;
-      border: 1px dashed #2e7d32;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-family: monospace;
-      font-size: 13px;
-      word-break: break-all;
-      margin: 10px 0;
-    }
-    .crypto-link {
-      display: inline-block;
-      margin: 8px 0;
-      padding: 10px 16px;
-      background-color: #f57c00;
-      color: #ffffff;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: bold;
-    }
-    .crypto-link:hover {
-      background-color: #e65100;
-    }
-    .qr-img {
-      display: block;
-      margin: 12px auto;
-      border: 4px solid #ffffff;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-    }
-    .txid-step {
-      background: #fffde7;
-      border: 1px solid #fbc02d;
-      border-radius: 8px;
-      padding: 15px;
-      margin-bottom: 18px;
-    }
-    .status-badge {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
-    .status-pending {
-      background: #ffe082;
-      color: #6d4c41;
-    }
-    .status-confirmed {
-      background: #c8e6c9;
-      color: #1b5e20;
-    }
-    .action-buttons {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 12px;
-    }
+    
+    /* Cart Quantity & Remove Controls */
+    .qty-controls { display: flex; align-items: center; gap: 6px; }
+    .qty-btn { background: #6e7781; padding: 3px 8px; font-weight: bold; }
+    .qty-btn:hover { background: #57606a; }
+    .remove-btn { background: #d73a49; padding: 4px 8px; font-size: 12px; margin-left: 5px; }
+    .remove-btn:hover { background: #cb2431; }
+    
+    .summary-row { display: flex; justify-content: space-between; margin-top: 8px; font-size: 15px; }
+    .total-row { display: flex; justify-content: space-between; font-size: 1.2em; font-weight: bold; margin: 12px 0 20px; padding-top: 10px; border-top: 2px solid #eee; }
+    .form-section { border-top: 1px solid #ddd; padding-top: 15px; margin-top: 15px; }
+    .form-group { margin-bottom: 12px; }
+    .form-row { display: flex; gap: 10px; }
+    .form-row .form-group { flex: 1; }
+    label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 4px; }
+    input, select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; }
+    textarea { width: 100%; height: 260px; margin-top: 10px; padding: 12px; box-sizing: border-box; font-family: monospace; font-size: 13px; border: 1px solid #ccc; border-radius: 5px; }
+    .hidden { display: none; }
   </style>
 </head>
 <body>
 
-<div class="container">
-  <img src="banner.png" alt="Store Banner" class="banner" onerror="this.style.display='none'">
-  <h1>BasicsAAS Storefront</h1>
-
-  <div class="grid">
-    <!-- Left Column: Product Catalog -->
-    <div class="card">
-      <h2>Product Catalog</h2>
-      <h3>Available Items</h3>
+  <img src="banner.png" alt="Store Banner" class="banner">
+  
+  <h1>Product Catalog</h1>
+  
+  <div class="container">
+    <div class="products">
+      <h2>Available Items</h2>
       <div id="product-list"></div>
     </div>
 
-    <!-- Right Column: Cart & Checkout Form -->
-    <div class="card">
+    <div class="cart">
       <h2>Your Cart</h2>
       <div id="cart-items"><p>Your cart is empty.</p></div>
-
-      <div class="totals">
-        <p><span>Subtotal:</span> <span>$ <span id="subtotal">0.00</span></span></p>
-        <p><span>Flat Rate Shipping:</span> <span>$ <span id="shipping">0.00</span></span></p>
-        <p class="total-final"><span>Total:</span> <span>$ <span id="total">0.00</span></span></p>
+      
+      <div class="summary-row">
+        <span>Subtotal:</span>
+        <span>$<span id="cart-subtotal">0.00</span></span>
+      </div>
+      <div class="summary-row">
+        <span>Flat Rate Shipping:</span>
+        <span>$<span id="cart-shipping">0.00</span></span>
+      </div>
+      <div class="total-row">
+        <span>Total:</span>
+        <span>$<span id="cart-total">0.00</span></span>
       </div>
 
-      <hr style="margin: 18px 0; border: 0; border-top: 1px solid #c8e6c9;" />
-
-      <h3>Customer & Payment Details</h3>
-      <form id="checkout-form">
+      <div class="form-section">
+        <h3>Customer & Payment Details</h3>
         <div class="form-group">
-          <label for="fullName">Full Name *</label>
-          <input type="text" id="fullName" required />
+          <label for="cust-name">Full Name *</label>
+          <input type="text" id="cust-name" placeholder="Jane Doe" required>
         </div>
         <div class="form-group">
-          <label for="email">Email *</label>
-          <input type="email" id="email" required />
+          <label for="cust-email">Email *</label>
+          <input type="email" id="cust-email" placeholder="jane@example.com" required>
         </div>
         <div class="form-group">
-          <label for="address">Street Address *</label>
-          <input type="text" id="address" required />
+          <label for="cust-address">Street Address *</label>
+          <input type="text" id="cust-address" placeholder="123 Main St" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cust-city">City *</label>
+            <input type="text" id="cust-city" placeholder="Baltimore" required>
+          </div>
+          <div class="form-group">
+            <label for="cust-state">State *</label>
+            <input type="text" id="cust-state" placeholder="MD" required>
+          </div>
+          <div class="form-group">
+            <label for="cust-zip">Zip *</label>
+            <input type="text" id="cust-zip" placeholder="21201" required>
+          </div>
         </div>
         <div class="form-group">
-          <label for="city">City *</label>
-          <input type="text" id="city" required />
-        </div>
-        <div class="form-group">
-          <label for="state">State *</label>
-          <input type="text" id="state" required />
-        </div>
-        <div class="form-group">
-          <label for="zip">Zip *</label>
-          <input type="text" id="zip" required />
-        </div>
-        <div class="form-group">
-          <label for="paymentMethod">Payment Method *</label>
-          <select id="paymentMethod" required>
-            <option value="">Select a payment option...</option>
+          <label for="payment-method">Payment Method *</label>
+          <select id="payment-method" required>
+            <option value="" disabled selected>Select a payment option...</option>
             <option value="Bitcoin">Bitcoin</option>
             <option value="Ethereum">Ethereum</option>
           </select>
         </div>
-        <button type="submit" style="width: 100%; padding: 12px; font-size: 16px;">Submit Order</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- Order Summary, Crypto Payment & TXID Confirmation Section -->
-  <div id="order-summary-section">
-    <h2>Order Summary</h2>
-    <span id="payment-status-badge" class="status-badge status-pending">Status: Awaiting Crypto Payment & TXID</span>
-
-    <!-- Step 1: Automated Crypto Payment Link & QR Code -->
-    <div class="crypto-box">
-      <h3 style="margin-bottom: 6px;">Step 1: Send <span id="crypto-currency-label">Crypto</span> Payment</h3>
-      <p style="margin: 4px 0; font-size: 14px;">Total Amount Due: <strong>$<span id="crypto-usd-amount">0.00</span> USD</strong></p>
-      <a id="crypto-payment-link" href="#" class="crypto-link">Open Wallet App to Pay</a>
-      <img id="crypto-qr-code" class="qr-img" src="" alt="Crypto Payment QR Code" width="180" height="180" />
-
-      <p style="margin: 6px 0 2px; font-size: 13px;">Or send manually to this <span id="crypto-network-name"></span> address:</p>
-      <div class="wallet-address-box" id="wallet-address-display"></div>
-      <button type="button" class="btn-secondary" onclick="copyWalletAddress()">Copy Wallet Address</button>
-    </div>
-
-    <!-- Step 2: Transaction ID (TXID) Confirmation -->
-    <div class="txid-step">
-      <h3 style="margin-bottom: 6px;">Step 2: Confirm Your Transaction ID (TXID)</h3>
-      <p style="margin: 0 0 10px; font-size: 13px;">
-        After sending your payment, paste your Transaction ID / Hash below to unlock the order submission buttons.
-      </p>
-      <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-        <input
-          type="text"
-          id="txid-input"
-          placeholder="Paste your Transaction ID (TXID / Hash) here..."
-          style="flex: 1; min-width: 220px;"
-        />
-        <button type="button" id="confirm-txid-btn" onclick="confirmTransactionId()">Confirm TXID</button>
       </div>
-      <p id="txid-feedback" style="margin: 8px 0 0; font-size: 13px; font-weight: bold;"></p>
-    </div>
 
-    <!-- Step 3: Final Order Text & Email Submission -->
-    <p style="font-size: 14px;">Click below to open your email app with this order filled out, or copy and paste it manually:</p>
-    <textarea id="order-text-output" rows="13" readonly style="font-family: monospace; background: #f9f9f9;"></textarea>
-
-    <div class="action-buttons">
-      <button type="button" id="send-email-btn" disabled onclick="sendViaEmail()">Send via Email</button>
-      <button type="button" id="copy-order-btn" class="btn-secondary" disabled onclick="copyOrderToClipboard()">Copy to Clipboard</button>
+      <button onclick="generateOrder()" style="width: 100%; font-size: 16px; margin-top: 10px;">Submit Order</button>
     </div>
   </div>
-</div>
+  
+  <!-- Generated Text Output -->
+  <div id="output-section" class="hidden" style="margin-top: 25px; border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: #f9f9f9;">
+    <h2>Order Summary</h2>
+    <p>Click below to open your email app with this order filled out, or copy and paste it manually:</p>
+    <textarea id="order-text" readonly></textarea>
+    <div style="display: flex; gap: 10px; margin-top: 10px;">
+      <button onclick="sendEmail()">Send via Email</button>
+      <button onclick="copyText()">Copy to Clipboard</button>
+    </div>
+  </div>
 
-<script>
-  const STORE_EMAIL = "BasicsAAS1@gmail.com";
-  const FLAT_RATE_SHIPPING = 20.00;
+  
+  <script>
+    const products = [
+      { id: 1, image: "BasicsIconThumbnail.png", name: "Testosterone E", price: 30.00, desc: "250mg/ml" },
+      { id: 2, image: "BasicsIconThumbnail.png", name: "Testosterone E", price: 35.00, desc: "300mg/ml" },
+      { id: 3, image: "BasicsIconThumbnail.png", name: "Testosterone C", price: 30.00, desc: "200mg/ml" },
+      { id: 4, image: "BasicsIconThumbnail.png", name: "Testosterone C", price: 35.00, desc: "250mg/ml" },
+      { id: 5, image: "BasicsIconThumbnail.png", name: "BTestosterone P", price: 30.00, desc: "100mg/ml" },
+      { id: 6, image: "BasicsIconThumbnail.png", name: "Sustanon 250", price: 40.00, desc: "250mg/ml" },
+      { id: 7, image: "BasicsIconThumbnail.png", name: "Sustanon 250", price: 45.00, desc: "300mg/ml" },
+      { id: 8, image: "BasicsIconThumbnail.png", name: "Nandrolone Decanoate (Deca)", price: 30.00, desc: "200mg/ml" },
+      { id: 9, image: "BasicsIconThumbnail.png", name: "Nandrolone Phenylpropionate (NPP)", price: 40.00, desc: "150mg/ml" },
+      { id: 10, image: "BasicsIconThumbnail.png", name: "Trenbolone E", price: 55.00, desc: "200mg/ml" },
+      { id: 11, image: "BasicsIconThumbnail.png", name: "Trenbolone A", price: 45.00, desc: "100mg/ml" }
 
-  const WALLETS = {
-    Bitcoin: "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh",
-    Ethereum: "0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
-  };
 
-  const products = [
-{ id: 1, image: "BasicsIconThumbnail.png", name: "Testosterone E", price: 30.00, desc: "250mg/ml" },
-{ id: 2, image: "BasicsIconThumbnail.png", name: "Testosterone E", price: 35.00, desc: "300mg/ml" },
-{ id: 3, image: "BasicsIconThumbnail.png", name: "Testosterone C", price: 30.00, desc: "200mg/ml" },
-{ id: 4, image: "BasicsIconThumbnail.png", name: "Testosterone C", price: 35.00, desc: "250mg/ml" },
-{ id: 5, image: "BasicsIconThumbnail.png", name: "Testosterone P", price: 30.00, desc: "100mg/ml" },
-{ id: 6, image: "BasicsIconThumbnail.png", name: "Sustanon 250", price: 40.00, desc: "250mg/ml" },
-{ id: 7, image: "BasicsIconThumbnail.png", name: "Sustanon 250", price: 45.00, desc: "300mg/ml" },
-{ id: 8, image: "BasicsIconThumbnail.png", name: "Nandrolone Decanoate (DECA)", price: 30.00, desc: "200mg/ml" },
-{ id: 9, image: "BasicsIconThumbnail.png", name: "Nandrolone Phenylpropionate (NPP)", price: 40.00, desc: "100mg/ml" },
-{ id: 10, image: "BasicsIconThumbnail.png", name: "Trenbolone E", price: 55.00, desc: "200mg/ml" },
-{ id: 11, image: "BasicsIconThumbnail.png", name: "Trenbolone A", price: 45.00, desc: "100mg/ml" }
-];
-let cart = [];
-let currentOrderData = null;
-let confirmedTxid = "";
-function renderProducts() {
-const list = document.getElementById("product-list");
-list.innerHTML = "";
-products.forEach(function(p) {
-const itemDiv = document.createElement("div");
-itemDiv.className = "product-item";
-const infoDiv = document.createElement("div");
-infoDiv.className = "product-info";
-if (p.image) {
-const img = document.createElement("img");
-img.src = p.image;
-img.alt = p.name;
-img.className = "product-icon";
-img.onerror = function() { this.style.display = "none"; };
-infoDiv.appendChild(img);
+    ];
+
+    const FLAT_SHIPPING = 20.00;
+    let cart = [];
+    let currentOrderId = "";
+    
+    document.addEventListener("DOMContentLoaded", () => {
+      const productListEl = document.getElementById("product-list");
+      products.forEach(product => {
+        const div = document.createElement("div");
+        div.className = "product-item";
+        div.innerHTML = `
+          <div class="product-info">
+            <img src="${product.image}" alt="${product.name}" class="product-img">
+            <div>
+              <strong>${product.name}</strong> - $${product.price.toFixed(2)}
+              <p class="product-desc">${product.desc}</p>
+            </div>
+          </div>
+          <button onclick="addToCart(${product.id})" style="flex-shrink: 0;">Add to Cart</button>
+        `;
+        productListEl.appendChild(div);
+      });
+    });
+
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      const existing = cart.find(item => item.id === productId);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ ...product, qty: 1 });
+      }
+      updateCartUI();
+    }
+
+    function changeQty(productId, delta) {
+      const item = cart.find(i => i.id === productId);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) {
+        removeFromCart(productId);
+      } else {
+        updateCartUI();
+      }
+    }
+
+    function removeFromCart(productId) {
+      cart = cart.filter(item => item.id !== productId);
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const cartItemsEl = document.getElementById("cart-items");
+      const subtotalEl = document.getElementById("cart-subtotal");
+      const shippingEl = document.getElementById("cart-shipping");
+      const totalEl = document.getElementById("cart-total");
+
+      if (cart.length === 0) {
+        cartItemsEl.innerHTML = "<p>Your cart is empty.</p>";
+        subtotalEl.textContent = "0.00";
+        shippingEl.textContent = "0.00";
+        totalEl.textContent = "0.00";
+        return;
+      }
+
+      cartItemsEl.innerHTML = "";
+      let subtotal = 0;
+
+      cart.forEach(item => {
+        const itemTotal = item.price * item.qty;
+        subtotal += itemTotal;
+        const div = document.createElement("div");
+        div.className = "cart-item";
+        div.innerHTML = `
+          <div>
+            <strong>${item.name}</strong><br>
+            <small>$${item.price.toFixed(2)} each = $${itemTotal.toFixed(2)}</small>
+          </div>
+          <div class="qty-controls">
+            <button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
+            <span>${item.qty}</span>
+            <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+            <button class="remove-btn" onclick="removeFromCart(${item.id})">Remove</button>
+          </div>
+        `;
+        cartItemsEl.appendChild(div);
+      });
+
+      const grandTotal = subtotal + FLAT_SHIPPING;
+      subtotalEl.textContent = subtotal.toFixed(2);
+      shippingEl.textContent = FLAT_SHIPPING.toFixed(2);
+      totalEl.textContent = grandTotal.toFixed(2);
+    }
+
+ function generateOrder() {
+      if (cart.length === 0) {
+        alert("Please add at least one item to your cart first.");
+        return;
+      }
+
+      const name = document.getElementById("cust-name").value.trim();
+      const email = document.getElementById("cust-email").value.trim();
+      const address = document.getElementById("cust-address").value.trim();
+      const city = document.getElementById("cust-city").value.trim();
+      const state = document.getElementById("cust-state").value.trim();
+      const zip = document.getElementById("cust-zip").value.trim();
+      const payment = document.getElementById("payment-method").value;
+
+      if (!name || !email || !address || !city || !state || !zip || !payment) {
+        alert("Please fill out all customer fields and select a payment method.");
+        return;
+      }
+
+      // Generate Unique Order ID (e.g., ORD-20261116-4829)
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const day = String(now.getDate()).padStart(2, "0");
+      const randomDigits = Math.floor(1000 + Math.random() * 9000);
+      currentOrderId = "ORD-" + year + month + day + "-" + randomDigits;
+
+      let summary = "NEW ORDER REQUEST\n";
+      summary += "Order ID: " + currentOrderId + "\n";
+      summary += "====================================\n";
+      summary += "ITEMS ORDERED:\n";
+      
+      let subtotal = 0;
+      cart.forEach(item => {
+        const itemTotal = item.price * item.qty;
+        subtotal += itemTotal;
+        summary += "- " + item.qty + "x " + item.name + " @ $" + Number(item.price).toFixed(2) + " = $" + itemTotal.toFixed(2) + "\n";
+      });
+
+      const grandTotal = subtotal + FLAT_SHIPPING;
+
+      summary += "------------------------------------\n";
+      summary += "Subtotal: $" + subtotal.toFixed(2) + "\n";
+      summary += "Flat Rate Shipping: $" + FLAT_SHIPPING.toFixed(2) + "\n";
+      summary += "TOTAL DUE: $" + grandTotal.toFixed(2) + "\n";
+      summary += "Payment Method: " + payment + "\n";
+      summary += "====================================\n";
+      summary += "CUSTOMER DETAILS:\n";
+      summary += "Name: " + name + "\n";
+      summary += "Email: " + email + "\n";
+      summary += "Address: " + address + "\n";
+      summary += "City/State/Zip: " + city + ", " + state + " " + zip + "\n";
+
+      document.getElementById("order-text").value = summary;
+      document.getElementById("output-section").classList.remove("hidden");
+    }
+function copyText() {
+const textArea = document.getElementById("order-text");
+textArea.select();
+navigator.clipboard.writeText(textArea.value);
+alert("Order copied to clipboard!");
 }
-//<<<<<<< Basics-AAS-patch-1
 
 function sendEmail() {
-      const storeEmail = "BasicsAAS1@gmail.com";
+      const storeEmail = "BasicsAAS@protonmail.com";
       const customerName = document.getElementById("cust-name").value.trim();
       const orderBody = document.getElementById("order-text").value;
 
@@ -377,222 +347,7 @@ function sendEmail() {
 
       window.location.href = "mailto:" + storeEmail + "?subject=" + subject + "&body=" + body;
     }
-//=======
-const textDiv = document.createElement("div");
-const descText = p.desc ? " (" + p.desc + ")" : "";
-textDiv.innerHTML = "" + p.name + "" + descText + "
-$" + p.price.toFixed(2) + "";
-infoDiv.appendChild(textDiv);
-const btn = document.createElement("button");
-btn.type = "button";
-btn.textContent = "Add to Cart";
-btn.onclick = function() { addToCart(p.id); };
-itemDiv.appendChild(infoDiv);
-itemDiv.appendChild(btn);
-list.appendChild(itemDiv);
-});
-}
-function addToCart(productId) {
-const product = products.find(function(p) { return p.id === productId; });
-const existing = cart.find(function(item) { return item.id === productId; });
-const label = product.desc ? product.name + " (" + product.desc + ")" : product.name;
-if (existing) {
-existing.qty += 1;
-} else {
-cart.push({ id: product.id, name: label, price: product.price, qty: 1 });
-}
-updateCartUI();
-}
-function changeQty(productId, delta) {
-const item = cart.find(function(i) { return i.id === productId; });
-if (!item) return;
-item.qty += delta;
-if (item.qty <= 0) {
-cart = cart.filter(function(i) { return i.id !== productId; });
-}
-updateCartUI();
-}
-function removeItem(productId) {
-cart = cart.filter(function(i) { return i.id !== productId; });
-updateCartUI();
-}
-function updateCartUI() {
-const cartDiv = document.getElementById("cart-items");
-cartDiv.innerHTML = "";
-if (cart.length === 0) {
-cartDiv.innerHTML = "Your cart is empty.";
-document.getElementById("subtotal").textContent = "0.00";
-document.getElementById("shipping").textContent = "0.00";
-document.getElementById("total").textContent = "0.00";
-return;
-}
-let subtotal = 0;
-cart.forEach(function(item) {
-const lineTotal = item.price * item.qty;
-subtotal += lineTotal;
-const row = document.createElement("div");
-row.className = "product-item";
-const left = document.createElement("div");
-left.innerHTML = "" + item.name + " ($" + item.price.toFixed(2) + " ea)
-Line Total: $" + lineTotal.toFixed(2) + "";
-const right = document.createElement("div");
-const minusBtn = document.createElement("button");
-minusBtn.type = "button";
-minusBtn.className = "qty-btn";
-minusBtn.textContent = "-";
-minusBtn.onclick = function() { changeQty(item.id, -1); };
-const qtySpan = document.createElement("span");
-qtySpan.textContent = " " + item.qty + " ";
-const plusBtn = document.createElement("button");
-plusBtn.type = "button";
-plusBtn.className = "qty-btn";
-plusBtn.textContent = "+";
-plusBtn.onclick = function() { changeQty(item.id, 1); };
-const remBtn = document.createElement("button");
-remBtn.type = "button";
-remBtn.className = "remove-btn";
-remBtn.textContent = "Remove";
-remBtn.onclick = function() { removeItem(item.id); };
-right.appendChild(minusBtn);
-right.appendChild(qtySpan);
-right.appendChild(plusBtn);
-right.appendChild(remBtn);
-row.appendChild(left);
-row.appendChild(right);
-cartDiv.appendChild(row);
-});
-const total = subtotal + FLAT_RATE_SHIPPING;
-document.getElementById("subtotal").textContent = subtotal.toFixed(2);
-document.getElementById("shipping").textContent = FLAT_RATE_SHIPPING.toFixed(2);
-document.getElementById("total").textContent = total.toFixed(2);
-}
-function generateOrderNumber() {
-const now = new Date();
-const yyyy = now.getFullYear();
-const mm = String(now.getMonth() + 1).padStart(2, "0");
-const dd = String(now.getDate()).padStart(2, "0");
-const rand = Math.floor(1000 + Math.random() * 9000);
-return "ORD-" + yyyy + mm + dd + "-" + rand;
-}
-document.getElementById("checkout-form").addEventListener("submit", function(e) {
-e.preventDefault();
-if (cart.length === 0) {
-alert("Please add at least one item to your cart before submitting.");
-return;
-}
-const paymentMethod = document.getElementById("paymentMethod").value;
-const walletAddress = WALLETS[paymentMethod];
-const subtotal = cart.reduce(function(sum, item) { return sum + item.price * item.qty; }, 0);
-const total = subtotal + FLAT_RATE_SHIPPING;
-const orderId = generateOrderNumber();
-confirmedTxid = "";
-document.getElementById("txid-input").value = "";
-document.getElementById("txid-feedback").textContent = "";
-document.getElementById("send-email-btn").disabled = true;
-document.getElementById("copy-order-btn").disabled = true;
-const badge = document.getElementById("payment-status-badge");
-badge.className = "status-badge status-pending";
-badge.textContent = "Status: Awaiting Crypto Payment & TXID";
-const uriScheme = paymentMethod === "Bitcoin"
-? "bitcoin:" + walletAddress + "?label=" + encodeURIComponent(orderId)
-: "ethereum:" + walletAddress;
-document.getElementById("crypto-currency-label").textContent = paymentMethod;
-document.getElementById("crypto-network-name").textContent = paymentMethod;
-document.getElementById("crypto-usd-amount").textContent = total.toFixed(2);
-document.getElementById("wallet-address-display").textContent = walletAddress;
-const payLink = document.getElementById("crypto-payment-link");
-payLink.href = uriScheme;
-payLink.textContent = "Pay with " + paymentMethod + " Wallet App";
-const qrUrl = "qrserver.com" + encodeURIComponent(uriScheme);
-document.getElementById("crypto-qr-code").src = qrUrl;
-const itemLines = cart.map(function(i) {
-return i.name + " (x" + i.qty + ") - $" + (i.price * i.qty).toFixed(2);
-}).join(String.fromCharCode(10));
-currentOrderData = {
-orderId: orderId,
-items: itemLines,
-subtotal: subtotal.toFixed(2),
-shipping: FLAT_RATE_SHIPPING.toFixed(2),
-total: total.toFixed(2),
-paymentMethod: paymentMethod,
-walletAddress: walletAddress,
-fullName: document.getElementById("fullName").value.trim(),
-email: document.getElementById("email").value.trim(),
-address: document.getElementById("address").value.trim(),
-city: document.getElementById("city").value.trim(),
-state: document.getElementById("state").value.trim(),
-zip: document.getElementById("zip").value.trim()
-};
-renderOrderText();
-const summaryBox = document.getElementById("order-summary-section");
-summaryBox.style.display = "block";
-summaryBox.scrollIntoView({ behavior: "smooth" });
-});
-function confirmTransactionId() {
-const rawTxid = document.getElementById("txid-input").value.trim();
-const feedback = document.getElementById("txid-feedback");
-if (rawTxid.length < 20 || /\s/.test(rawTxid)) {
-feedback.style.color = "#c62828";
-feedback.textContent = "Please enter a valid Transaction ID / Hash (at least 20 characters, no spaces).";
-return;
-}
-confirmedTxid = rawTxid;
-feedback.style.color = "#2e7d32";
-feedback.textContent = "Transaction ID confirmed! Your order summary is updated and ready to send.";
-const badge = document.getElementById("payment-status-badge");
-badge.className = "status-badge status-confirmed";
-badge.textContent = "Status: Payment Submitted (TXID Confirmed)";
-document.getElementById("send-email-btn").disabled = false;
-document.getElementById("copy-order-btn").disabled = false;
-renderOrderText();
-}
-function renderOrderText() {
-if (!currentOrderData) return;
-const d = currentOrderData;
-const nl = String.fromCharCode(10);
-const txidLine = confirmedTxid
-? "Transaction ID (TXID): " + confirmedTxid + nl + "Payment Status: Submitted (Pending Blockchain Verification)"
-: "Transaction ID (TXID): [Pending Customer Payment]";
-const summary =
-"New Order Request - " + d.orderId + nl +
-"========================================" + nl +
-"Order ID: " + d.orderId + nl + nl +
-"Items Ordered:" + nl + d.items + nl + nl +
-"Subtotal: $" + d.subtotal + nl +
-"Flat Rate Shipping: $" + d.shipping + nl +
-"Total Due: $" + d.total + nl + nl +
-"Payment Method: " + d.paymentMethod + nl +
-"Paid To Wallet: " + d.walletAddress + nl +
-txidLine + nl + nl +
-"Customer Information:" + nl +
-"Name: " + d.fullName + nl +
-"Email: " + d.email + nl +
-"Street Address: " + d.address + nl +
-"City: " + d.city + nl +
-"State: " + d.state + nl +
-"Zip: " + d.zip + nl +
-"========================================";
-document.getElementById("order-text-output").value = summary;
-}
-function copyWalletAddress() {
-const addr = document.getElementById("wallet-address-display").textContent;
-navigator.clipboard.writeText(addr).then(function() {
-alert("Wallet address copied to clipboard!");
-});
-}
-function copyOrderToClipboard() {
-const text = document.getElementById("order-text-output").value;
-navigator.clipboard.writeText(text).then(function() {
-alert("Order summary copied to clipboard!");
-});
-}
-function sendViaEmail() {
-if (!currentOrderData || !confirmedTxid) return;
-const subject = encodeURIComponent("New Order Request - " + currentOrderData.orderId);
-const body = encodeURIComponent(document.getElementById("order-text-output").value);
-window.location.href = "mailto:" + STORE_EMAIL + "?subject=" + subject + "&body=" + body;
-}
-document.addEventListener("DOMContentLoaded", function() {
->>>>>>> main
 renderProducts();
-});
+  </script>
+</body>
+</html>
