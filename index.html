@@ -365,6 +365,19 @@ img.className = "product-icon";
 img.onerror = function() { this.style.display = "none"; };
 infoDiv.appendChild(img);
 }
+//<<<<<<< Basics-AAS-patch-1
+
+function sendEmail() {
+      const storeEmail = "BasicsAAS1@gmail.com";
+      const customerName = document.getElementById("cust-name").value.trim();
+      const orderBody = document.getElementById("order-text").value;
+
+      const subject = encodeURIComponent("New Order Request - " + customerName);
+      const body = encodeURIComponent(orderBody);
+
+      window.location.href = "mailto:" + storeEmail + "?subject=" + subject + "&body=" + body;
+    }
+//=======
 const textDiv = document.createElement("div");
 const descText = p.desc ? " (" + p.desc + ")" : "";
 textDiv.innerHTML = "" + p.name + "" + descText + "
@@ -580,5 +593,6 @@ const body = encodeURIComponent(document.getElementById("order-text-output").val
 window.location.href = "mailto:" + STORE_EMAIL + "?subject=" + subject + "&body=" + body;
 }
 document.addEventListener("DOMContentLoaded", function() {
+>>>>>>> main
 renderProducts();
 });
