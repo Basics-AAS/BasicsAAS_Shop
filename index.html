@@ -79,6 +79,27 @@
     input, select { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; }
     textarea { width: 100%; height: 260px; margin-top: 10px; padding: 12px; box-sizing: border-box; font-family: monospace; font-size: 13px; border: 1px solid #ccc; border-radius: 5px; }
     .hidden { display: none; }
+
+    /* Footer Contact Info */
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px 0;
+      border-top: 1px solid #444;
+      color: #8FB2C9;
+      font-size: 14px;
+    }
+    footer a {
+      color: #8FB2C9;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    footer a:hover {
+      color: #45BBF6;
+      text-decoration: underline;
+    }
+
+    
   </style>
 </head>
 <body>
@@ -163,7 +184,10 @@
     </div>
   </div>
 
-  
+    <footer>
+    Contact: <a href="mailto:BasicsAAS@protonmail.com">BasicsAAS@protonmail.com</a>
+  </footer>
+
   <script>
     const products = [
       { id: 1, image: "BasicsIconThumbnail.png", name: "Testosterone E", price: 30.00, desc: "250mg/ml" },
