@@ -220,7 +220,7 @@
     let cart = [];
     let currentOrderId = "";
     
-   document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", () => {
       const productListEl = document.getElementById("product-list");
       products.forEach(product => {
         const div = document.createElement("div");
@@ -233,11 +233,29 @@
               <p class="product-desc">${product.desc}</p>
             </div>
           </div>
-          <button onclick="addToCart(${product.id})" style="flex-shrink: 0;">Add to Cart</button>
+          <button 
+            onclick="addToCart(${product.id})" 
+            style="flex-shrink: 0;" 
+            ${product.outOfStock ? "disabled" : ""}>
+            ${product.outOfStock ? "Out of Stock" : "Add to Cart"}
+          </button>
         `;
         productListEl.appendChild(div);
       });
     });
+
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      if (!product || product.outOfStock) return;
+
+      const existing = cart.find(item => item.id === productId);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ ...product, qty: 1 });
+      }
+      updateCartUI();
+    }
 
     function addToCart(productId) {
       const product = products.find(p => p.id === productId);
