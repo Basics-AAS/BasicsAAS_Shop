@@ -18,7 +18,6 @@
     .container { display: flex; flex-wrap: wrap; gap: 20px; }
     .products, .cart { flex: 1; min-width: 320px; border: 1px solid #444; padding: 20px; border-radius: 8px; background: #BDBDBD; }
     .cart { background: #E8E8E8; }
-   // .cart hr { border: none; border-top: 2px solid #6B6B6B; width: 100%; margin: 12px 0; display: block; }
     .summary-row:first-of-type { border-top: 1px solid #888; padding-top: 10px; margin-top: 10px; }
     .total-row { border-top: 1px solid #888; padding-top: 10px; margin-top: 10px; }
     .totals { border-top: 2px solid #6B6B6B; border-bottom: 2px solid #6B6B6B; padding: 10px 0; margin: 10px 0; } 
@@ -84,8 +83,8 @@
     .remove-btn:hover { background: #cb2431; }
     
     .summary-row { display: flex; justify-content: space-between; margin-top: 8px; font-size: 15px; }
-    .total-row { display: flex; justify-content: space-between; font-size: 1.2em; font-weight: bold; margin: 12px 0 20px; padding-top: 10px; border-top: 2px solid #eee; }
-    .form-section { background: #F7F7F7, border-top: 1px solid #ddd; padding-top: 15px; margin-top: 15px; }
+    .total-row { display: flex; justify-content: space-between; font-size: 1.2em; font-weight: bold; margin: 12px 0 20px; padding-top: 10px; border-top: 2px solid #E8E8E8; }
+    .form-section { background: #F7F7F7; border-top: 1px solid #ddd; padding-top: 15px; margin-top: 15px; }
     .form-group { margin-bottom: 12px; }
     .form-row { display: flex; gap: 10px; }
     .form-row .form-group { flex: 1; }
@@ -145,8 +144,9 @@
         <span>$<span id="cart-total">0.00</span></span>
       </div>
 
-      <div class="form-">
+       <div class="form-section">
         <h3>Customer & Payment Details</h3>
+
         <div class="form-group">
           <label for="cust-name">Full Name *</label>
           <input type="text" id="cust-name" placeholder="Jane Doe" required>
