@@ -61,6 +61,15 @@
       margin: 3px 0 0;
       line-height: 1.4;
     }
+    button:disabled {
+      background: #888888;
+      color: #dddddd;
+      cursor: not-allowed;
+    }
+    button:disabled:hover {
+      background: #888888;
+    }
+
     
     /* Cart Quantity & Remove Controls */
     .qty-controls { display: flex; align-items: center; gap: 6px; }
@@ -190,18 +199,19 @@
 
   <script>
     const products = [
-      { id: 1, image: "BasicsIconThumbnail.png", name: "Testosterone E", price: 30.00, desc: "250mg/ml" },
-     // { id: 2, image: "BasicsIconThumbnail.png", name: "Testosterone E", price: 35.00, desc: "300mg/ml" },
-      { id: 3, image: "BasicsIconThumbnail.png", name: "Testosterone C", price: 30.00, desc: "200mg/ml" },
-      { id: 4, image: "BasicsIconThumbnail.png", name: "Testosterone C", price: 35.00, desc: "250mg/ml" },
-      { id: 5, image: "BasicsIconThumbnail.png", name: "Testosterone P", price: 30.00, desc: "100mg/ml" },
-      { id: 6, image: "BasicsIconThumbnail.png", name: "Sustanon 250", price: 40.00, desc: "250mg/ml" },
-      { id: 7, image: "BasicsIconThumbnail.png", name: "Sustanon 250", price: 45.00, desc: "300mg/ml" },
-      { id: 8, image: "BasicsIconThumbnail.png", name: "Nandrolone Decanoate (Deca)", price: 30.00, desc: "200mg/ml" },
-      //{ id: 9, image: "BasicsIconThumbnail.png", name: "Nandrolone Phenylpropionate (NPP)", price: 40.00, desc: "150mg/ml" },
-      //{ id: 10, image: "BasicsIconThumbnail.png", name: "Trenbolone E", price: 55.00, desc: "200mg/ml" },
-      { id: 11, image: "BasicsIconThumbnail.png", name: "Trenbolone E", price: 45.00, desc: "150mg/ml" },
-      { id: 12, image: "BasicsIconThumbnail.png", name: "Trenbolone A", price: 45.00, desc: "100mg/ml" }
+      { id: 1, image: "BasicsIconThumbnail.png", name: "Testosterone E", price: 30.00, desc: "250mg/ml", outOfStock: false },
+      { id: 1, image: "BasicsIconThumbnail.png", name: "Testosterone E", price: 33.00, desc: "275mg/ml", outOfStock: false },
+      { id: 2, image: "BasicsIconThumbnail.png", name: "Testosterone E", price: 35.00, desc: "300mg/ml", outOfStock: true  },
+      { id: 3, image: "BasicsIconThumbnail.png", name: "Testosterone C", price: 30.00, desc: "200mg/ml", outOfStock: true  },
+      { id: 4, image: "BasicsIconThumbnail.png", name: "Testosterone C", price: 35.00, desc: "250mg/ml", outOfStock: false  },
+      { id: 5, image: "BasicsIconThumbnail.png", name: "Testosterone P", price: 30.00, desc: "100mg/ml", outOfStock: false  },
+      { id: 6, image: "BasicsIconThumbnail.png", name: "Sustanon 250", price: 40.00, desc: "250mg/ml", outOfStock: false  },
+      { id: 7, image: "BasicsIconThumbnail.png", name: "Sustanon 250", price: 45.00, desc: "300mg/ml", outOfStock: false  },
+      { id: 8, image: "BasicsIconThumbnail.png", name: "Nandrolone Decanoate (Deca)", price: 35.00, desc: "200mg/ml", outOfStock: false  },
+      { id: 9, image: "BasicsIconThumbnail.png", name: "Nandrolone Phenylpropionate (NPP)", price: 40., outOfStock: false 00, desc: "150mg/ml", outOfStock: true  },
+      { id: 10, image: "BasicsIconThumbnail.png", name: "Trenbolone E", price: 50.00, desc: "200mg/ml", outOfStock: true  },
+      { id: 11, image: "BasicsIconThumbnail.png", name: "Trenbolone E", price: 45.00, desc: "150mg/ml", outOfStock: false  },
+      { id: 12, image: "BasicsIconThumbnail.png", name: "Trenbolone A", price: 45.00, desc: "100mg/ml", outOfStock: false  }
 
 
     ];
