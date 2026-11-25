@@ -17,6 +17,7 @@
     h1 { color: #8FB2C9; } /* White title text for contrast */
     .container { display: flex; flex-wrap: wrap; gap: 20px; }
     .products, .cart { flex: 1; min-width: 320px; border: 1px solid #444; padding: 20px; border-radius: 8px; background: #BDBDBD; }
+    .cart { background: #DBDBDB; }
     .product-item, .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; }
     
     /* Banner */
@@ -140,7 +141,7 @@
         <span>$<span id="cart-total">0.00</span></span>
       </div>
 
-      <div class="form-section">
+      <div class="form-">
         <h3>Customer & Payment Details</h3>
         <div class="form-group">
           <label for="cust-name">Full Name *</label>
@@ -183,7 +184,7 @@
   </div>
   
   <!-- Generated Text Output -->
-  <div id="output-section" class="hidden" style="margin-top: 25px; border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: #f9f9f9;">
+  <div id="output-" class="hidden" style="margin-top: 25px; border: 1px solid #ddd; padding: 20px; border-radius: 8px; background: #f9f9f9;">
     <h2>Order Summary</h2>
     <p>Click below to open your email app with this order filled out, or copy and paste it manually:</p>
     <textarea id="order-text" readonly></textarea>
@@ -367,7 +368,7 @@
       summary += "City/State/Zip: " + city + ", " + state + " " + zip + "\n";
 
       document.getElementById("order-text").value = summary;
-      document.getElementById("output-section").classList.remove("hidden");
+      document.getElementById("output-").classList.remove("hidden");
     }
 
     function copyText() {
